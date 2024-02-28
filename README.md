@@ -106,4 +106,32 @@ When traveling to the mountains, you'll need to make preparations for the follow
     * Bring plenty of water, lotion, eye drops and chapstick (all of which can be bought at the local Grocery store - prices are reasonable there)
 1. **Lots of snow**
     * Wear warm clothing that is _waterproof_; the snow will melt on you and can easily-soak clothing (especially socks, if your shoes aren't waterproof)
+    * Bring sunglasses - snow is much brighter than you'd expect
 
+#### Clothing Recommendations
+
+##### Wedding Attire
+
+_TBD; we don't even know what we'll be wearing yet_
+
+##### General Clothing Recommendations
+
+* Beanie
+* Waterproof Pants, Jacket, gloves and boots
+* Fleece jacket as a layer underneath your waterproof jacket (if needed)
+
+When out and about in Breckenridge, it's possible (even likely) that there will be a significant amount of snow. It does not evenly-accumulate, so some
+areas will be much deeper than others, even if there's only been 1" accumulation. It's not unlikely that you'll step in a snow bank that goes up to your
+ankle while walking around town. If you aren't wearing waterproof, warm clothing, this can make you dangerously wet and cold very quickly.
+
+#### Dining Options
+
+The Lodge at Breckendridge has an on-site restaurant, Traverse,  that's open from 7-10am for breakfast and 4-9 for dinner. Breakfast is included 
+in the resort fee, so anyone staying at the venue can eat there without additional cost. Dinner is not included with the resort fee; Traverse's dinner
+prices are a bit high and the options are a bit limited.
+
+There are many restaurants in Breckenridge, but many are closed by 6pm or 7pm. Many of them are available for delivery through Door Dash or Uber Eats,
+in case the shuttle is not available, or you don't want to drive. Given the odd hours for some restaurants, it's not a bad idea to buy some snacks 
+and drinks for your room (there is a refrigerator in each room).
+
+#### 
