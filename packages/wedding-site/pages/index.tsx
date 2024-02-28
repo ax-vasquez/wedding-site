@@ -22,7 +22,6 @@ const Home: React.FC<HomePageProps> = ({
 }
 
 export const getStaticProps = (async () => {
-    console.log(`GETTING STATIC PROPS`)
     const welcomePage = await client.fetch(`
         *[_type == "welcomePage"]{
             welcomeMessage,
