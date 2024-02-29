@@ -1,4 +1,5 @@
 import React from 'react'
+import NavBar from '../nav/NavBar'
 
 interface PageLayoutProps {
     children?: any
@@ -8,8 +9,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
-            <main>
+        <div className="">
+            <NavBar />
+            <main className=''>
                 {children}
             </main>
         </div>
