@@ -11,13 +11,31 @@ interface HomePageProps {
   }[]
 }
 
-const components = {
-  marks: {
-    p: ({ value, children })=> {
-      return <p className="">{children}</p>
-    }
+const rootPages = [
+  {
+    to: '/rsvp',
+    label: 'RSVP'
+  },
+  {
+    to: '/itinerary',
+    label: 'Itinerary'
+  },
+  {
+    to: '/venue',
+    label: 'Venue'
+  },
+  {
+    to: '/travel',
+    label: 'Travel'
+  },
+  {
+    to: '/preparation',
+    label: 'Preparation'
   }
-} as Partial<PortableTextReactComponents>
+] as {
+  to: string
+  label: string
+}[]
 
 const Home: React.FC<HomePageProps> = ({
   welcomePage
@@ -43,18 +61,18 @@ const Home: React.FC<HomePageProps> = ({
       </div>
       <PortableText 
         value={welcomePage[0].welcomeMessage}
-        components={components}
       />
       <div>
-        <h2>
+        <h2 className="text-2xl">
           For our guests
         </h2>
-        <ul>
-          <li><Link href="/rsvp">RSVP</Link></li>
-          <li><Link href="/itinerary">Itinerary</Link></li>
-          <li><Link href="/venue">Venue</Link></li>
-          <li><Link href="/travel">Travel</Link></li>
-          <li><Link href="/preparation">Preparation</Link></li>
+        
+        <ul className="marker:text-red-500 list-disc list-inside">
+          {rootPages.map(({ to, label }, index) => {
+            return (
+              <li key={`root-page-idx-${index}`} className="text-morning-snow"><Link className="text-black" href={to}>{label}</Link></li>
+            )
+          })}
         </ul>
       </div>
     </PageLayout>

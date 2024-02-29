@@ -14,6 +14,8 @@ const config: Config = {
       },
     },
     colors: {
+      'black': '#000000',
+      'white': '#FFFFFF',
       'morning-snow': '#7196c9',
       'amber-glow': '#ffe0b4',
       'mountain-pine': '#323b44'
