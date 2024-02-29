@@ -1,0 +1,11 @@
+{
+  "name": "wedding-site",
+  "version": "1.0.0",
+  "description": "The repo for the site that Larah and I created together for our wedding 🎉",
+  "scripts": {
+    "web:dev": "cd packages/wedding-site && yarn && yarn dev",
+    "studio:dev": "cd packages/cms && yarn && yarn dev"
+  },
+  "author": "",
+  "license": "MIT"
+}
