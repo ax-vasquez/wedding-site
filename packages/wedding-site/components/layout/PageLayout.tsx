@@ -1,5 +1,4 @@
 import React from 'react'
-import NavBar from '../nav/NavBar'
 
 interface PageLayoutProps {
     children?: any
@@ -10,7 +9,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 }) => {
     return (
         <div className="">
-            <NavBar />
             <main className=''>
                 {children}
             </main>
