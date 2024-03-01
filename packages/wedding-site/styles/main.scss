@@ -1,0 +1,45 @@
+@use 'variables' as vars;
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+body, html, #__next {
+    height: 100% !important;
+}
+
+@mixin vertical-item-spacing {
+    >:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
+main {
+    @include vertical-item-spacing();
+    height: 100%;
+}
+
+.text-content {
+    @include vertical-item-spacing();
+    @media screen and (max-width: vars.$laptop) {
+        margin-bottom: 100px;
+        margin: auto 24px;
+    }
+    @media screen and (min-width: vars.$laptop) {
+        margin: auto;
+        max-width: 900px;
+        margin-bottom: 400px;
+    }
+}
+  
+
+// Uses the same style as Medium body text for now
+p {
+    font-size: 32px;
+    text-align: center;
+}
+
+h1,
+h2,
+ul,
+p,
+.subtitle {
+    font-family: "Amatic SC", sans-serif;
+}

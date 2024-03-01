@@ -2,6 +2,7 @@ import personalCareConcern from './attendeePrepTypes/personalCareConcern'
 import travelOption from './attendeePrepTypes/travelOption'
 import weatherConcern from './attendeePrepTypes/weatherConcern'
 import blockContent from './blockContent'
+import venueImage from './venueImage'
 import welcomePage from './welcomePage'
 
 const attendeePrepTypes = [
@@ -11,7 +12,8 @@ const attendeePrepTypes = [
 ]
 
 export const schemaTypes = [
-    welcomePage, 
+    welcomePage,
+    venueImage,
     blockContent,
     ...attendeePrepTypes
 ]

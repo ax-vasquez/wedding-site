@@ -8,7 +8,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
     return (
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
+        <div className="h-full">
             <main>
                 {children}
             </main>
