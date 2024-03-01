@@ -32,11 +32,13 @@ main {
 
 // Uses the same style as Medium body text for now
 p {
-    font-size: 28px;
+    font-size: 32px;
     text-align: center;
 }
 
 h1,
+h2,
+ul,
 p,
 .subtitle {
     font-family: "Amatic SC", sans-serif;

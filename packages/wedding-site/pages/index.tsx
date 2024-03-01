@@ -85,7 +85,7 @@ const Home: React.FC<HomePageProps> = ({
         caption={(
           <div className="py-7">
             <h1 className="text-8xl text-white text-center">Larah & Mando</h1>
-            <div className="subtitle text-4xl text-white text-center mt-4">Winter, 2025</div>
+            <div className="subtitle text-4xl text-white text-center mt-4">Breckenridge, CO - Winter, 2025</div>
           </div>
         )}
       />
@@ -129,16 +129,16 @@ const Home: React.FC<HomePageProps> = ({
         title={parallaxImages[1].title}
         key={parallaxImages[1].key}
       />
-      <div className="text-content">
+      <div className="text-content py-7 text-white">
         <div>
-          <h2 className="text-2xl">
+          <h2 className="text-6xl mb-4 text-center">
             For our guests
           </h2>
           
-          <ul className="list-disc list-inside">
+          <ul className="columns-2 text-center">
             {rootPages.map(({ to, label }, index) => {
               return (
-                <li key={`root-page-idx-${index}`} className="text-morning-snow"><Link className="text-black" href={to}>{label}</Link></li>
+                <li key={`root-page-idx-${index}`}><Link className="text-4xl text-morning-snow hover:text-white" href={to}>{label}</Link></li>
               )
             })}
           </ul>
