@@ -8,8 +8,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
     return (
-        <div className="">
-            <main className=''>
+        <div className="h-full">
+            <main>
                 {children}
             </main>
         </div>
