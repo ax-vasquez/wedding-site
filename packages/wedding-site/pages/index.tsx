@@ -9,6 +9,11 @@ interface HomePageProps {
   welcomePage: {
     welcomeMessage: any
   }[]
+  parallaxImages: {
+    title: string
+    imageUrl: string
+    key: string
+  }[]
 }
 
 const rootPages = [
@@ -38,7 +43,8 @@ const rootPages = [
 }[]
 
 const Home: React.FC<HomePageProps> = ({
-  welcomePage
+  welcomePage,
+  parallaxImages
 }) => {
   return (
     <PageLayout>
@@ -49,32 +55,35 @@ const Home: React.FC<HomePageProps> = ({
         }}
       >
         <Image 
-            src={'/images/banner-1.jpg'}
+            src={parallaxImages[1].imageUrl}
             height={0}
             width={0}
             sizes="100vw"
             fill
-            alt="hero-image"
+            alt={parallaxImages[0].title}
             priority={true}
             style={{ objectFit: `cover` }}
         />
       </div>
-      <PortableText 
-        value={welcomePage[0].welcomeMessage}
-      />
-      <div>
-        <h2 className="text-2xl">
-          For our guests
-        </h2>
-        
-        <ul className="marker:text-red-500 list-disc list-inside">
-          {rootPages.map(({ to, label }, index) => {
-            return (
-              <li key={`root-page-idx-${index}`} className="text-morning-snow"><Link className="text-black" href={to}>{label}</Link></li>
-            )
-          })}
-        </ul>
+      <div className="text-content">
+        <PortableText 
+          value={welcomePage[0].welcomeMessage}
+        />
+        <div>
+          <h2 className="text-2xl">
+            For our guests
+          </h2>
+          
+          <ul className="list-disc list-inside">
+            {rootPages.map(({ to, label }, index) => {
+              return (
+                <li key={`root-page-idx-${index}`} className="text-morning-snow"><Link className="text-black" href={to}>{label}</Link></li>
+              )
+            })}
+          </ul>
+        </div>
       </div>
+      
     </PageLayout>
   )
 }
@@ -85,8 +94,16 @@ export const getStaticProps = (async () => {
             welcomeMessage,
         }
     `)
+    const parallaxImages = await client.fetch(`
+      *[_type == "venueImage"] | order(key asc) {
+          title,
+          key,
+          "imageUrl": image.asset->url
+      }
+    `)
     return { props: {
-        welcomePage
+        welcomePage,
+        parallaxImages
     }}
 }) satisfies GetStaticProps<{
     welcomePage: any

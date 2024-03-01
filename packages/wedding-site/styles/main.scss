@@ -1,7 +1,10 @@
 @use 'variables' as vars;
 
 main {
-    margin-top: 1rem;
+    
+}
+
+.text-content {
     @media screen and (max-width: vars.$laptop) {
         margin-bottom: 100px;
         margin: auto 24px;
