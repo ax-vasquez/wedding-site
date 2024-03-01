@@ -89,15 +89,45 @@ const Home: React.FC<HomePageProps> = ({
           </div>
         )}
       />
-      <div className="text-content">
+      <div className="text-content text-white py-7">
         <PortableText 
-          value={welcomePage[0].welcomeMessage}
+          value={welcomePage[0].welcomeMessage[0]}
         />
       </div>
       <ParallaxImage 
         imageUrl={parallaxImages[0].imageUrl}
         title={parallaxImages[0].title}
         key={parallaxImages[0].key}
+      />
+      <div className="text-content text-white py-7">
+        <PortableText 
+          value={welcomePage[0].welcomeMessage[1]}
+        />
+      </div>
+      <ParallaxImage 
+        imageUrl={parallaxImages[2].imageUrl}
+        title={parallaxImages[2].title}
+        key={parallaxImages[2].key}
+      />
+      <div className="text-content text-white py-7">
+        <PortableText 
+          value={welcomePage[0].welcomeMessage[2]}
+        />
+      </div>
+      <ParallaxImage 
+        imageUrl={parallaxImages[3].imageUrl}
+        title={parallaxImages[3].title}
+        key={parallaxImages[3].key}
+      />
+      <div className="text-content text-white py-7">
+        <PortableText 
+          value={welcomePage[0].welcomeMessage[3]}
+        />
+      </div>
+      <ParallaxImage 
+        imageUrl={parallaxImages[1].imageUrl}
+        title={parallaxImages[1].title}
+        key={parallaxImages[1].key}
       />
       <div className="text-content">
         <div>
@@ -115,10 +145,10 @@ const Home: React.FC<HomePageProps> = ({
         </div>
       </div>
       <ParallaxImage 
-          imageUrl={parallaxImages[2].imageUrl}
-          title={parallaxImages[2].title}
-          key={parallaxImages[2].key}
-        />
+        imageUrl={parallaxImages[3].imageUrl}
+        title={parallaxImages[3].title}
+        key={parallaxImages[3].key}
+      />
     </PageLayout>
   )
 }

@@ -24,7 +24,7 @@ main {
     }
     @media screen and (min-width: vars.$laptop) {
         margin: auto;
-        max-width: 700px;
+        max-width: 900px;
         margin-bottom: 400px;
     }
 }
@@ -32,11 +32,12 @@ main {
 
 // Uses the same style as Medium body text for now
 p {
-    font-size: 20px;
-    font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 28px;
+    text-align: center;
 }
 
 h1,
+p,
 .subtitle {
     font-family: "Amatic SC", sans-serif;
 }
