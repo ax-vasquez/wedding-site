@@ -16,7 +16,9 @@ const Preparation: NextPage<{
     personalCareConcerns
 }) => {
     return (
-        <PageLayout>
+        <PageLayout
+            pageTitle="Preparation"
+        >
             <ParallaxImage 
                 imageUrl={parallaxImages[1].imageUrl}
                 title={parallaxImages[1].title}

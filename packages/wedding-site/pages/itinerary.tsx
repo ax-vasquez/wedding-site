@@ -11,7 +11,9 @@ const Itinerary: NextPage<{
     parallaxImages
 }) => {
     return (
-        <PageLayout>
+        <PageLayout
+            pageTitle="Itinerary"
+        >
             <ParallaxImage 
                 imageUrl={parallaxImages[1].imageUrl}
                 title={parallaxImages[1].title}
