@@ -8,5 +8,6 @@
     "studio:dev": "cd packages/cms && yarn && yarn dev"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@1.22.21"
 }

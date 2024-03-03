@@ -34,5 +34,6 @@
     "printWidth": 100,
     "bracketSpacing": false,
     "singleQuote": true
-  }
+  },
+  "packageManager": "yarn@1.22.21"
 }
