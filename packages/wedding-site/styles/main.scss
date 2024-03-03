@@ -38,8 +38,19 @@ p {
 
 h1,
 h2,
-ul,
-p,
+h3,
+h4,
 .subtitle {
     font-family: "Amatic SC", sans-serif;
+}
+
+p {
+    font-size: 1rem;
+    text-align: start;
+}
+
+.mitigations-list {
+    >:not(:last-child) {
+        margin-bottom: 1rem;
+    }
 }

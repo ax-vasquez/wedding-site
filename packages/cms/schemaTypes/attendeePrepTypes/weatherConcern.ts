@@ -18,15 +18,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-        name: 'risks',
-        title: 'Risks',
-        validation: (Rule) => Rule.required(),
-        type: 'array',
-        of: [
-            { type: 'string' }
-        ]
-    }),
-    defineField({
         name: 'mitigations',
         title: 'Mitigations',
         validation: (Rule) => Rule.required(),
