@@ -5,6 +5,7 @@ import Image from "next/image";
 import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
 import { ReactNode } from "react";
+import ParallaxImage from "@/components/ParallaxImage";
 
 interface HomePageProps {
   welcomePage: {
@@ -43,35 +44,6 @@ const rootPages = [
   label: string
 }[]
 
-const ParallaxImageCaption: React.FC<{captionComponent: ReactNode | string}> = ({
-  captionComponent
-}) => {
-  return (
-    <div className="absolute top-1/3 bg-mountain-pine w-full opacity-80">
-        {captionComponent}
-    </div>
-  )
-}
-
-const ParallaxImage: React.FC<{ imageUrl: string, title: string, key: string, caption?: any }> = ({
-  imageUrl,
-  title,
-  key,
-  caption
-}) => {
-  return (
-    <div 
-      key={key}
-      style={{
-        backgroundImage: `url(${imageUrl})`
-      }}
-      className="h-full bg-fixed bg-center bg-no-repeat bg-cover"
-    >
-      {caption && <ParallaxImageCaption captionComponent={caption} />}
-    </div>
-  )
-}
-
 const Home: React.FC<HomePageProps> = ({
   welcomePage,
   parallaxImages
@@ -81,7 +53,6 @@ const Home: React.FC<HomePageProps> = ({
       <ParallaxImage 
         imageUrl={parallaxImages[1].imageUrl}
         title={parallaxImages[1].title}
-        key={parallaxImages[1].key}
         caption={(
           <div className="py-7">
             <h1 className="text-8xl text-white text-center">Larah & Mando</h1>
