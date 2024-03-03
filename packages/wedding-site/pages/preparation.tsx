@@ -1,17 +1,30 @@
 import ParallaxImage from "@/components/ParallaxImage"
 import PageLayout from "@/components/layout/PageLayout"
 import { client } from "@/sanity/client"
+import { PortableText } from "@portabletext/react"
 import { GetStaticProps, NextPage } from "next"
 import React from "react"
 
+type ParallaxImageData = {
+    title: string
+    imageUrl: string
+    key: string
+}
+
+type PreparationItemData = {
+    title: string
+    description: any
+    mitigations: string[]
+}
+
 const Preparation: NextPage<{ 
-    parallaxImages: {
-        title: string
-        imageUrl: string
-        key: string
-    }[] 
+    parallaxImages: ParallaxImageData[]
+    weatherConcerns: PreparationItemData[]
+    personalCareConcerns: PreparationItemData[]
 }> = ({
-    parallaxImages
+    parallaxImages,
+    weatherConcerns,
+    personalCareConcerns
 }) => {
     return (
         <PageLayout>
@@ -26,15 +39,54 @@ const Preparation: NextPage<{
             />
             <div className="text-content text-white py-7">
                 <div>
-                    <h2 className="text-4xl text-center mb-4">Personal Care</h2>
-                    <div>
-                        Breckenridge is high in the Colorado Rockies; around 10,000 feet, roughly. Because of its altitude and the 
-                        time of year the event is planned, there are a number of things to consider before you go so you can prepare
-                        ahead of time.
-                    </div>
+                    <h2 className="text-6xl text-center mb-4">Personal Care</h2>
+                    {personalCareConcerns.map((concern, idx) => {
+                        return (
+                            <div key={`care-concern-${idx}`} className="mt-8">
+                                <h3 className="text-3xl mb-4">
+                                    {concern.title}
+                                </h3>
+                                <PortableText
+                                    value={concern.description}
+                                />
+                                <ul className="mitigations-list mt-6 indent-6 list-disc list-inside">
+                                    {concern.mitigations.map((mitigation, mIdx) => {
+                                        return (
+                                            <li key={`care-concern-${idx}-mitigation-${mIdx}}`} className="italic">{mitigation}</li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
+                        )
+                    })}
                 </div>
-                
+                <div>
+                    <h2 className="text-6xl text-center mb-4 mt-12">Weather Concerns</h2>
+                    {weatherConcerns.map((concern, idx) => {
+                        return (
+                            <div key={`care-concern-${idx}`} className="mt-8">
+                                <h3 className="text-3xl mb-4">
+                                    {concern.title}
+                                </h3>
+                                <PortableText
+                                    value={concern.description}
+                                />
+                                <ul className="mitigations-list mt-6 indent-6 list-disc list-inside">
+                                    {concern.mitigations.map((mitigation, mIdx) => {
+                                        return (
+                                            <li key={`care-concern-${idx}-mitigation-${mIdx}}`} className="italic">{mitigation}</li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
+            <ParallaxImage 
+                imageUrl={parallaxImages[3].imageUrl}
+                title={parallaxImages[3].title}
+            />
         </PageLayout>
     )
 }
@@ -47,15 +99,29 @@ export const getStaticProps = (async () => {
           "imageUrl": image.asset->url
       }
     `)
+    const weatherConcerns = await client.fetch(`
+      *[_type == "weatherConcern"] | order(title desc) {
+          title,
+          description,
+          mitigations
+      }
+    `)
+    const personalCareConcerns = await client.fetch(`
+      *[_type == "personalCareConcern"] | order(title desc) {
+          title,
+          description,
+          mitigations
+      }
+    `)
     return { props: {
-        parallaxImages
+        parallaxImages,
+        weatherConcerns,
+        personalCareConcerns
     }}
 }) satisfies GetStaticProps<{
-    parallaxImages: {
-        title: string
-        imageUrl: string
-        key: string
-    }[]
+    parallaxImages: ParallaxImageData[]
+    weatherConcerns: PreparationItemData[]
+    personalCareConcerns: PreparationItemData[]
 }>
 
 export default Preparation
