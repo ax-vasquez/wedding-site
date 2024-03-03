@@ -1,21 +1,16 @@
-import { GetStaticProps, NextPage } from "next";
+import { GetStaticProps } from "next";
 import { client } from "@/sanity/client";
-import { PortableText, PortableTextReactComponents } from "@portabletext/react";
-import Image from "next/image";
+import { PortableText } from "@portabletext/react";
 import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
-import { ReactNode } from "react";
 import ParallaxImage from "@/components/ParallaxImage";
+import { ParallaxImageData } from "@/types";
 
 interface HomePageProps {
   welcomePage: {
     welcomeMessage: any
   }[]
-  parallaxImages: {
-    title: string
-    imageUrl: string
-    key: string
-  }[]
+  parallaxImages: ParallaxImageData[]
 }
 
 const rootPages = [

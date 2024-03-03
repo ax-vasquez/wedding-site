@@ -1,0 +1,50 @@
+@mixin ease-transition-border-and-glow(
+    $default-box-shadow: inherit,
+    $default-border-color: inherit,
+    $hover-border-color: transparent,
+    $glow-color: transparent,
+    $glow-range: 0px,
+    $duration: 0.1s
+) {
+    transition: $duration ease !important;
+    box-shadow: $default-box-shadow !important;
+    border-color: $default-border-color !important;
+    &:hover {
+        border-color: $hover-border-color !important;
+        box-shadow: 0px 0px $glow-range $glow-range $glow-color !important;
+        transition: $duration ease !important;
+    }
+}
+
+@mixin nav-icon-hover-transition {
+    opacity: 1;
+    transition: 0.2s ease;
+    &:hover {
+        opacity: .5;
+        transition: 0.2s ease;
+    }
+}
+
+@mixin orderedListNesting {
+    ol {
+        list-style: upper-roman;
+        ol {
+            list-style: lower-roman;
+            ol {
+                list-style: upper-alpha;
+                ol {
+                    list-style: lower-alpha;
+                }
+            }
+        }
+    }
+}
+
+@mixin unorderedListNesting {
+    ul {
+        list-style: circle;
+        ul {
+            list-style: square;
+        }
+    }
+}
