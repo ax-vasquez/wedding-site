@@ -14,7 +14,7 @@
         margin-top: 1rem;
     }
     @media  screen and (max-width: vars.$laptop) {
-        width: 60%;
+        width: 80%;
     }
     @media screen and (min-width: vars.$laptop) {
         width: 25%
@@ -45,4 +45,19 @@
         transform: translateX(-100%);
     }
 
+}
+
+.sidebarLogoLabel {
+    @media  screen and (max-width: vars.$laptop) {
+        display: none;
+    }
+}
+
+.sidebarLogoWrapper {
+    @media  screen and (max-width: vars.$laptop) {
+        display: none;
+    }
+    @media screen and (min-width: vars.$laptop) {
+        width: 25%
+    }
 }

@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react'
 import SVG from 'react-inlinesvg'
 
 interface CustomIconProps {
+    id?: string
     /**
      * The name of the icon (must exactly-match the name of the file you are using from within the icons directory)
      * 
@@ -23,6 +24,7 @@ interface CustomIconProps {
  * 4. Done!
  */
 const CustomIcon: FunctionComponent<CustomIconProps> = ({
+    id,
     fileName,
     height,
     width,
@@ -32,7 +34,7 @@ const CustomIcon: FunctionComponent<CustomIconProps> = ({
     ...props
 }) => {
     return (
-      <div>
+      <div id={id}>
         <SVG
             className={className}
             src={`../icons/${fileName}.svg`}

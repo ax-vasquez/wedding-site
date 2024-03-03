@@ -19,6 +19,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 onClick={() => dispatch(toggleShowSidebar())}
             >
                 <CustomIcon
+                    id="sidebar-menu-button"
                     fileName="bootstrap-list"
                     height={48}
                     width={48}
