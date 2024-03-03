@@ -39,7 +39,13 @@ const SIDEBAR_OPTIONS = [
             label: `Preparation`,
             to: `/preparation`
         }
-    }
+    },
+    {
+        option: {
+            label: `Itinerary`,
+            to: `/itinerary`
+        }
+    },
 ] as SidebarOptionConfig[]
 
 const Sidebar: FunctionComponent<SidebarProps> = () => {

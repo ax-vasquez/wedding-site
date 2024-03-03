@@ -1,21 +1,10 @@
 import ParallaxImage from "@/components/ParallaxImage"
 import PageLayout from "@/components/layout/PageLayout"
 import { client } from "@/sanity/client"
+import { ParallaxImageData, PreparationItemData } from "@/types"
 import { PortableText } from "@portabletext/react"
 import { GetStaticProps, NextPage } from "next"
 import React from "react"
-
-type ParallaxImageData = {
-    title: string
-    imageUrl: string
-    key: string
-}
-
-type PreparationItemData = {
-    title: string
-    description: any
-    mitigations: string[]
-}
 
 const Preparation: NextPage<{ 
     parallaxImages: ParallaxImageData[]
