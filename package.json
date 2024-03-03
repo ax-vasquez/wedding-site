@@ -4,6 +4,7 @@
   "description": "The repo for the site that Larah and I created together for our wedding 🎉",
   "scripts": {
     "web:dev": "cd packages/wedding-site && yarn && yarn dev",
+    "web:build": "cd packages/wedding-site && yarn && yarn build",
     "studio:dev": "cd packages/cms && yarn && yarn dev"
   },
   "author": "",
