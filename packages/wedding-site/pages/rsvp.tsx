@@ -11,7 +11,9 @@ const RSVP: NextPage<{
     parallaxImages
 }) => {
     return (
-        <PageLayout>
+        <PageLayout
+            pageTitle="RSVP"
+        >
             <ParallaxImage 
                 imageUrl={parallaxImages[1].imageUrl}
                 title={parallaxImages[1].title}

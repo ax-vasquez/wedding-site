@@ -44,7 +44,9 @@ const Home: React.FC<HomePageProps> = ({
   parallaxImages
 }) => {
   return (
-    <PageLayout>
+    <PageLayout
+      pageTitle="Home"
+    >
       <ParallaxImage 
         imageUrl={parallaxImages[1].imageUrl}
         title={parallaxImages[1].title}
