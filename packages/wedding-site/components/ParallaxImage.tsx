@@ -13,7 +13,7 @@ const ParallaxImageCaption: React.FC<{captionComponent: ReactNode | string}> = (
 const ParallaxImage: React.FC<{ imageUrl: string, title: string, caption?: any }> = ({
     imageUrl,
     title,
-    caption
+    caption,
   }) => {
     return (
       <div

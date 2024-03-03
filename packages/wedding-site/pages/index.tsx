@@ -48,52 +48,23 @@ const Home: React.FC<HomePageProps> = ({
       <ParallaxImage 
         imageUrl={parallaxImages[1].imageUrl}
         title={parallaxImages[1].title}
+        key={parallaxImages[1].key.current}
         caption={(
           <div className="py-7">
             <h1 className="text-8xl text-white text-center">Larah & Mando</h1>
-            <div className="subtitle text-4xl text-white text-center mt-4">Breckenridge, CO - Winter, 2025</div>
+            <div className="subtitle text-4xl text-white text-center mt-4">Breckenridge, CO - February, 2025</div>
           </div>
         )}
       />
       <div className="text-content text-white py-7">
         <PortableText 
-          value={welcomePage[0].welcomeMessage[0]}
+          value={welcomePage[0].welcomeMessage}
         />
       </div>
       <ParallaxImage 
         imageUrl={parallaxImages[0].imageUrl}
         title={parallaxImages[0].title}
-        key={parallaxImages[0].key}
-      />
-      <div className="text-content text-white py-7">
-        <PortableText 
-          value={welcomePage[0].welcomeMessage[1]}
-        />
-      </div>
-      <ParallaxImage 
-        imageUrl={parallaxImages[2].imageUrl}
-        title={parallaxImages[2].title}
-        key={parallaxImages[2].key}
-      />
-      <div className="text-content text-white py-7">
-        <PortableText 
-          value={welcomePage[0].welcomeMessage[2]}
-        />
-      </div>
-      <ParallaxImage 
-        imageUrl={parallaxImages[3].imageUrl}
-        title={parallaxImages[3].title}
-        key={parallaxImages[3].key}
-      />
-      <div className="text-content text-white py-7">
-        <PortableText 
-          value={welcomePage[0].welcomeMessage[3]}
-        />
-      </div>
-      <ParallaxImage 
-        imageUrl={parallaxImages[1].imageUrl}
-        title={parallaxImages[1].title}
-        key={parallaxImages[1].key}
+        key={parallaxImages[0].key.current}
       />
       <div className="text-content py-7 text-white">
         <div>
@@ -104,7 +75,7 @@ const Home: React.FC<HomePageProps> = ({
           <ul className="columns-2 text-center">
             {rootPages.map(({ to, label }, index) => {
               return (
-                <li key={`root-page-idx-${index}`}><Link className="text-4xl text-morning-snow hover:text-white" href={to}>{label}</Link></li>
+                <li key={`root-page-idx-${index}`}><Link className="text-4xl text-morning-snow hover:text-white" href={to}><h2>{label}</h2></Link></li>
               )
             })}
           </ul>
@@ -113,7 +84,7 @@ const Home: React.FC<HomePageProps> = ({
       <ParallaxImage 
         imageUrl={parallaxImages[3].imageUrl}
         title={parallaxImages[3].title}
-        key={parallaxImages[3].key}
+        key={parallaxImages[3].key.current}
       />
     </PageLayout>
   )
