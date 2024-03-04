@@ -1,4 +1,5 @@
 import type { Knex } from "knex";
+import 'dotenv/config'
 
 // Update with your config settings.
 
@@ -12,8 +13,8 @@ const config: { [key: string]: Knex.Config } = {
       database: "wedding-site-db",
       host: `127.0.0.1`,
       port: 8000,
-      user: "mcnuggies",
-      password: "mcnuggies"
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD
     },
   },
 
