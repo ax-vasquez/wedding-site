@@ -88,7 +88,7 @@ const Sidebar: FunctionComponent<SidebarProps> = () => {
                 alt="site-logo"
             />
             <div className={`flex items-center ${styles.sidebarLogoLabel}`}>
-                <h2 className="text-6xl ml-4 text-white font-bold">Mando & Larah</h2>
+                <h2 className="text-6xl ml-4 text-white font-bold">Larah & Mando</h2>
                 <span></span>
             </div>
         </div>
