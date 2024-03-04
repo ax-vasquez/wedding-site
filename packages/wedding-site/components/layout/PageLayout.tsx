@@ -10,6 +10,26 @@ interface PageLayoutProps {
     children?: any
 }
 
+const Modal: React.FC<{
+    title: string
+}> = ({
+    title
+}) => {
+    return (
+        <div>
+            <div
+                className="fixed z-30 w-full h-full bg-black opacity-80"
+            />
+            <div className="fixed top-1/3 z-40 rounded-sm left-1/2 w-1/2 bg-white p-5 modal">
+                <div className="inline-flex w-full">
+                    <h2 className="text-3xl flex-1">{title}</h2>
+                    <button className="relative">X</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const PageLayout: React.FC<PageLayoutProps> = ({
     pageTitle,
     children
@@ -42,6 +62,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 />
                 <span className='text-2xl text-white ml-4'>Sign in</span>
             </div>
+            <Modal 
+                title='Sign In'
+            />
             <main>
                 {children}
             </main>
