@@ -18,7 +18,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     return (
         <div className="h-full">
             <Head>
-                <title>L & M Wedding | {pageTitle}</title>
+                <title>{`L & M Wedding | ${pageTitle}`}</title>
             </Head>
             <Sidebar />
             <div className='fixed top-5 left-5 z-20 rounded-lg hover:cursor-pointer'
@@ -29,8 +29,18 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     fileName="bootstrap-list"
                     height={48}
                     width={48}
-                    className="text-white hover:text-white"
+                    className="text-white"
                 />
+            </div>
+            <div className='fixed top-5 right-5 z-20 hover:cursor-pointer inline-flex items-center'>
+                <CustomIcon
+                    id="sidebar-menu-button"
+                    fileName="bootstrap-people-circle"
+                    height={48}
+                    width={48}
+                    className="text-white"
+                />
+                <span className='text-2xl text-white ml-4'>Sign in</span>
             </div>
             <main>
                 {children}
