@@ -1,40 +1,61 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import CustomIcon from '../CustomIcon'
 import { useDispatch } from 'react-redux'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
+import Modal from '../Modal'
 
 interface PageLayoutProps {
     pageTitle: string
     children?: any
 }
 
-const Modal: React.FC<{
-    title: string
-}> = ({
-    title
-}) => {
-    return (
-        <div>
-            <div
-                className="fixed z-30 w-full h-full bg-black opacity-80"
-            />
-            <div className="fixed top-1/3 z-40 rounded-sm left-1/2 w-1/2 bg-white p-5 modal">
-                <div className="inline-flex w-full">
-                    <h2 className="text-3xl flex-1">{title}</h2>
-                    <button className="relative">X</button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 const PageLayout: React.FC<PageLayoutProps> = ({
     pageTitle,
     children
 }) => {
+    const [isNewUser, setIsNewUser] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const dispatch = useDispatch()
+
+    const formOptions = isNewUser ? [
+        {
+            label: `Email`,
+            type: `email`
+        },
+        {
+            label: `First Name`,
+            type: `text`
+        },
+        {
+            label: `Last Name`,
+            type: `text`
+        },
+        {
+            label: `Invite Code`,
+            type: `text`
+        },
+        {
+            label: `Password`,
+            type: `password`
+        },
+        {
+            label: `Confirm Password`,
+            type: `password`
+        }
+    ] :
+    [
+        {
+            label: `email`,
+            type: `email`
+        },
+        {
+            label: `Password`,
+            type: `password`
+        }
+    ]
+
     return (
         <div className="h-full">
             <Head>
@@ -52,7 +73,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     className="text-white"
                 />
             </div>
-            <div className='fixed top-5 right-5 z-20 hover:cursor-pointer inline-flex items-center'>
+            <div className='fixed top-5 right-5 z-20 hover:cursor-pointer inline-flex items-center'
+                onClick={() => setIsModalOpen(true)}
+            >
                 <CustomIcon
                     id="sidebar-menu-button"
                     fileName="bootstrap-people-circle"
@@ -64,7 +87,26 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             </div>
             <Modal 
                 title='Sign In'
-            />
+                isOpen={isModalOpen}
+                closeHandler={() => setIsModalOpen(false)}
+            >
+                <form
+                    className='mt-8 sign-in-form'
+                >
+                    {formOptions.map((obj, idx) => {
+                        return (
+                            <label key={`sign-up-field-${idx}`} className='inline-flex w-full'>
+                                <p className='flex-1'>{obj.label}:</p>
+                                <input className='items-end border rounded-md w-3/4 p-2' type={obj.type}/>
+                            </label>
+                        )
+                    })}
+                </form>
+                <div className="flex justify-center mt-10 text-morning-snow underline">
+                    {/* NOTE: The text selection logic looks inverse, but it's correct; when isNewUser is true, the toggle should indicate that clicking it will revert to the "Existing User" form, and vice versa */}
+                    <button onClick={() => setIsNewUser(!isNewUser)}>{isNewUser ? `Returning Users`: `New Users`}</button>
+                </div>
+            </Modal>
             <main>
                 {children}
             </main>

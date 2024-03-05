@@ -59,3 +59,12 @@ p {
 .modal {
     transform: translate(-50%, -50%);
 }
+
+.sign-in-form {
+    input {
+        border-color: vars.$gray-500;
+    }
+    >:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
