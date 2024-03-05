@@ -12,3 +12,14 @@ export type PreparationItemData = {
     description: any
     mitigations: string[]
 }
+
+export type VenueInfoItemData = {
+    title: string
+    venueOverview: any
+    venueContact: string[]
+    venueAddress: any
+    venueHours: string[]
+    venueAmenities: string[]
+    roomAmenities: string[]
+    dogAmenities: string[]
+}
