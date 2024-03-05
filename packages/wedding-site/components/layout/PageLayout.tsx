@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
 import Modal from '../Modal'
-import { setSessionToken } from '@/redux/sessionSlice'
+import { clearSessionToken, setSessionToken } from '@/redux/sessionSlice'
 
 interface PageLayoutProps {
     pageTitle: string
@@ -43,12 +43,18 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        if (sessionToken) {
+            dispatch(clearSessionToken())
+            setIsModalOpen(false)
+            return
+        }
         if (email && password) {
             const token = await loginUser({
                 email,
                 password
             });
             dispatch(setSessionToken(token))
+            setIsModalOpen(false)
         }
       }
 
@@ -126,7 +132,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     width={48}
                     className="text-white"
                 />
-                <span className='text-2xl text-white ml-4'>Sign in</span>
+                <span className='text-2xl text-white ml-4'>{sessionToken ? `Some User` : `Sign In`}</span>
             </div>
             <Modal 
                 title={isNewUser ? `Sign up` : `Sign in`}
@@ -137,15 +143,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     className='mt-8 sign-in-form flex flex-col'
                     onSubmit={handleSubmit}
                 >
-                    {formOptions.map((obj, idx) => {
-                        return (
-                            <label key={`sign-up-field-${idx}`} className='inline-flex w-full'>
-                                <p className='flex-1'>{obj.label}:</p>
-                                <input onChange={obj.onChange} className='items-end border rounded-md w-3/4 p-2' type={obj.type}/>
-                            </label>
-                        )
-                    })}
-                    <button className='items-center' type="submit">Submit</button>
+                    {!sessionToken && 
+                        formOptions.map((obj, idx) => {
+                            return (
+                                <label key={`sign-up-field-${idx}`} className='inline-flex w-full'>
+                                    <p className='flex-1'>{obj.label}:</p>
+                                    <input onChange={obj.onChange} className='items-end border rounded-md w-3/4 p-2' type={obj.type}/>
+                                </label>
+                            )
+                        })
+                    }
+                    <button className='items-center' type="submit">{sessionToken ? `Sign Out` : (isNewUser ? `Sign Up` : `Sign In`)}</button>
                 </form>
                 <div className="flex justify-center mt-10 text-morning-snow underline">
                     {/* NOTE: The text selection logic looks inverse, but it's correct; when isNewUser is true, the toggle should indicate that clicking it will revert to the "Existing User" form, and vice versa */}
