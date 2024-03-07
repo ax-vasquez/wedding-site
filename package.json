@@ -6,7 +6,6 @@
     "db:migrate:make": "cd packages/knex && yarn knex migrate:make",
     "db:migrate:up": "cd packages/knex && yarn knex migrate:latest",
     "db:migrate:down": "cd packages/knex && yarn knex migrate:down",
-    "server:dev": "cd packages/server && yarn dev",
     "studio:dev": "cd packages/cms && yarn && yarn dev",
     "web:dev": "cd packages/wedding-site && yarn && yarn dev",
     "web:build": "cd packages/wedding-site && yarn && yarn build"
