@@ -1,48 +1,29 @@
 import express from 'express'
 import cors from 'cors'
-import basicAuth from 'express-basic-auth'
-import cookieParser from 'cookie-parser'
+import { ConfigParams, auth, requiresAuth } from 'express-openid-connect'
+import 'dotenv/config'
 
 const app = express()
+app.use(cors())
 
-const auth = basicAuth({
-    authorizeAsync: true,
-    authorizer: (user, password, authorize) => {
-        console.log(`AUTH TEST: ${user}:${password}`)
-        return authorize(null, password === 'poopy_password')
-    }
+const auth0Config: ConfigParams = {
+    authRequired: false,
+    auth0Logout: true,
+    baseURL: process.env.AUTH0_BASE_URL,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+    secret: process.env.AUTH0_SECRET,
+}
+
+app.use(auth(auth0Config))
+
+app.get('/', (req, res) => {
+    console.log(`IS LOGGED IN: `, req.oidc.isAuthenticated())
+    res.redirect('http://localhost:3000')
 })
 
-app.use(cors({
-    origin: 'http://localhost:3000'
-}))
-app.use(cookieParser('crappy_signing_secret_delete_me'))
+app.get('/user', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user, null, 2));
+});
 
-app.get('/login', auth, (req, res) => {
-    const options = {
-        httpOnly: true,
-        signed: true
-    }
-
-    if (!req.headers.authorization) {
-        return res.send(400)
-    }
-
-    const parts = req.headers.authorization.split(':')
-
-    const email = parts[0]
-
-    res.cookie('email', email, options).send({ screen: email })
-})
-
-app.get('/read-cookie', (req, res) => {
-    console.log(`getting cookie`)
-    if (req.signedCookies.email === 'a@b.com') {
-        console.log(`FOUND!`)
-        res.send({ screen: "a@b.com" })
-    } else {
-        res.send({ screen: 'auth' })
-    }
-})
-
-app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
+app.listen(8080, () => console.log('API is running on http://localhost:8080'));

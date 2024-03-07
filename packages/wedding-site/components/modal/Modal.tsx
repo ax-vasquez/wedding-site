@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomIcon from './CustomIcon'
+import CustomIcon from '../CustomIcon'
 
 const Modal: React.FC<{
     title: string,
