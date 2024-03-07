@@ -3,7 +3,7 @@ import { sha256, getCookieKeyValue } from './utils';
 
 export async function onRequestPost(context: {
   request: Request;
-  env: { CFP_PASSWORD?: string };
+  env: { CFP_PASSWORD: string };
 }): Promise<Response> {
   const { request, env } = context;
   const body = await request.formData();

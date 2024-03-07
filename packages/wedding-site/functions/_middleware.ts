@@ -5,7 +5,7 @@ import { getTemplate } from './template';
 export async function onRequest(context: {
   request: Request;
   next: () => Promise<Response>;
-  env: { CFP_PASSWORD?: string };
+  env: { CFP_PASSWORD: string };
 }): Promise<Response> {
   const { request, next, env } = context;
   const { pathname, searchParams } = new URL(request.url);
