@@ -5,6 +5,7 @@ import SidebarOption, { SidebarOptionConfig } from './SidebarOption'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import kebabCase from '@/util/kebabCase'
 import Image from 'next/image'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 interface SidebarProps {
     
@@ -51,8 +52,18 @@ const SIDEBAR_OPTIONS = [
 
 const Sidebar: FunctionComponent<SidebarProps> = () => {
 
+    const user = useUser()
     const dispatch = useDispatch()
     const isSidebarOpen = useSelector((state: any) => state.nav.showSidebar)
+
+    const sidebarOptions = [] as SidebarOptionConfig[]
+    SIDEBAR_OPTIONS.forEach(option => {
+        if (['RSVP', 'Venue', 'Itinerary'].includes(option.option.label) && user.user) {
+            sidebarOptions.push(option)
+        } else if (!['RSVP', 'Venue', 'Itinerary'].includes(option.option.label)) {
+            sidebarOptions.push(option)
+        }
+    })
 
     useEffect(() => {
         /**
@@ -93,7 +104,7 @@ const Sidebar: FunctionComponent<SidebarProps> = () => {
             </div>
         </div>
         <div>
-            {SIDEBAR_OPTIONS.map(option => {
+            {sidebarOptions.map(option => {
                 const key = kebabCase(option.option.label)
                 return (
                     <SidebarOption
