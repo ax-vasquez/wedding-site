@@ -6,7 +6,7 @@ The repo for the site that Larah and I created together for our wedding 🎉
 
 1. [ ] Create Invitations page
 1. [ ] Create "Attendee Preparation" page
-1. [ ] Create Venue Information page
+1. [x] Create Venue Information page
 1. [ ] Implement password-protection for the domain
 
 ## Considerations
