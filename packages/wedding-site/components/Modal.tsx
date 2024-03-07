@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import CustomIcon from './CustomIcon'
 
 const Modal: React.FC<{

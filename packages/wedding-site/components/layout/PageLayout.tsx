@@ -1,11 +1,11 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import CustomIcon from '../CustomIcon'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
 import Modal from '../Modal'
-import { clearSessionToken, setSessionToken } from '@/redux/sessionSlice'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 
 interface PageLayoutProps {
     pageTitle: string
@@ -13,14 +13,31 @@ interface PageLayoutProps {
 }
 
 async function loginUser({ email, password }: { email: string, password: string }) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
+    const res = await axios.get('http://localhost:8080/login', {
+        auth: {
+            username: email,
+            password
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({ email, password }),
     })
-      .then(data => data.json())
+    return res as void | AxiosResponse<any, any>
+}
+
+const readCookie = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/read-cookie');
+      
+      if (res.data.screen !== undefined) {
+        console.log(`VAL: `, res.data.screen)
+        return res.data.screen
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    return null
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({
@@ -28,6 +45,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
 
+    const [screen, setScreen] = useState(null)
     const [isNewUser, setIsNewUser] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [email, setEmail] = useState(null as unknown as string)
@@ -38,27 +56,31 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     const [confirmPassword, setConfirmPassword] = useState(null as unknown as string)
 
     const dispatch = useDispatch()
-    
-    const sessionToken = useSelector((state: any) => state.session.token)
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        if (sessionToken) {
-            dispatch(clearSessionToken())
-            setIsModalOpen(false)
-            return
-        }
         if (email && password) {
-            const token = await loginUser({
-                email,
-                password
-            });
-            dispatch(setSessionToken(token))
-            setIsModalOpen(false)
+            try {
+                const loginRes = await loginUser({
+                    email,
+                    password
+                })
+                if (loginRes && loginRes.data.screen !== undefined) {
+                    setScreen(loginRes.data.screen)
+                    setIsModalOpen(false)
+                }
+            } catch (e) {
+                console.error(e)
+            }
         }
-      }
+    }
 
-    console.log(`SESSION TOKEN: `, sessionToken)
+    useEffect(() => {
+        readCookie()
+            .then(screen => setScreen(screen))
+      }, []);
+
+    console.log(`SCREEN VALUE: `, screen)
 
     const formOptions = isNewUser ? [
         {
@@ -132,7 +154,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     width={48}
                     className="text-white"
                 />
-                <span className='text-2xl text-white ml-4'>{sessionToken ? `Some User` : `Sign In`}</span>
+                <span className='text-2xl text-white ml-4'>{(screen !== 'auth') ? `Some User` : `Sign In`}</span>
             </div>
             <Modal 
                 title={isNewUser ? `Sign up` : `Sign in`}
@@ -143,7 +165,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     className='mt-8 sign-in-form flex flex-col'
                     onSubmit={handleSubmit}
                 >
-                    {!sessionToken && 
+                    {(screen === 'auth') && 
                         formOptions.map((obj, idx) => {
                             return (
                                 <label key={`sign-up-field-${idx}`} className='inline-flex w-full'>
@@ -153,7 +175,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                             )
                         })
                     }
-                    <button className='items-center' type="submit">{sessionToken ? `Sign Out` : (isNewUser ? `Sign Up` : `Sign In`)}</button>
+                    <button className='items-center' type="submit">{(screen !== 'auth') ? `Sign Out` : (isNewUser ? `Sign Up` : `Sign In`)}</button>
                 </form>
                 <div className="flex justify-center mt-10 text-morning-snow underline">
                     {/* NOTE: The text selection logic looks inverse, but it's correct; when isNewUser is true, the toggle should indicate that clicking it will revert to the "Existing User" form, and vice versa */}
