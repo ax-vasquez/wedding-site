@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build -b CFP_PASSWORD=test",
     "start": "next start",
     "lint": "next lint"
   },
