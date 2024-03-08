@@ -5,6 +5,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
 import ParallaxImage from "@/components/ParallaxImage";
 import { ParallaxImageData } from "@/types";
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 interface HomePageProps {
   welcomePage: {
@@ -43,6 +44,18 @@ const Home: React.FC<HomePageProps> = ({
   welcomePage,
   parallaxImages
 }) => {
+  const user = useUser()
+  const shownRootPages = [] as {
+    to: string
+    label: string
+  }[]
+  rootPages.forEach(pageConfig => {
+    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && user.user) {
+      shownRootPages.push(pageConfig)
+    } else if (!['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label)) {
+      shownRootPages.push(pageConfig)
+    }
+  })
   return (
     <PageLayout
       pageTitle="Home"
@@ -75,7 +88,7 @@ const Home: React.FC<HomePageProps> = ({
           </h2>
           
           <ul className="columns-2 text-center">
-            {rootPages.map(({ to, label }, index) => {
+            {shownRootPages.map(({ to, label }, index) => {
               return (
                 <li key={`root-page-idx-${index}`}><Link className="text-4xl text-morning-snow hover:text-white" href={to}><h2>{label}</h2></Link></li>
               )
