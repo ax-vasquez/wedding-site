@@ -26,7 +26,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
         if (user && user.email) {
             axios.get(`/api/user/get`)
                 .then((res) => {
-                    console.log(`RES: `, res.data)
                     const {
                         first_name,
                         last_name
