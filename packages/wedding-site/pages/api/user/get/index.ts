@@ -26,6 +26,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         return res.status(200).json(queryRes.rows[0])
       }
     } catch (e) {
-      return res.status(500).send(`Internal server error: ${e.message}`)
+      return res.status(500).send(`Internal server error: ${e}`)
     }
 }
