@@ -68,3 +68,9 @@ p {
         margin-bottom: 1rem;
     }
 }
+
+.hidden-on-mobile {
+    @media screen and (max-width: vars.$laptop) {
+        display: none;
+    }
+}
