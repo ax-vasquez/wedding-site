@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import CustomIcon from '../CustomIcon'
 import { useDispatch } from 'react-redux'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
 import { useUser } from '@auth0/nextjs-auth0/client'
+import axios from 'axios'
+import Image from 'next/image'
 
 interface PageLayoutProps {
     pageTitle: string
@@ -16,8 +18,27 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
 
-    const user = useUser()
+    const { user } = useUser()
+    const [name, setName] = useState(null as unknown as string)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (user && user.email) {
+            axios.get(`/api/user/get`)
+                .then((res) => {
+                    const {
+                        first_name,
+                        last_name
+                    } = res.data
+                    if (first_name && last_name) {
+                        setName(`${first_name} ${last_name}`)
+                    }
+                    return null
+                })
+                .catch(e => console.error(e))
+        }
+        
+    })
 
     return (
         <div className="h-full">
@@ -37,16 +58,22 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 />
             </div>
             <a className='fixed top-5 right-5 z-20 hover:cursor-pointer inline-flex items-center'
-                href={user.user ? '/api/auth/logout': '/api/auth/login'}
+                href={user ? '/api/auth/logout': '/api/auth/login'}
             >
-                <CustomIcon
-                    id="sidebar-menu-button"
-                    fileName="bootstrap-people-circle"
-                    height={48}
-                    width={48}
-                    className="text-white"
-                />
-                <span className='text-2xl text-white ml-4'>{user.user ? user.user.email : `Sign In`}</span>
+                {user?.picture ? 
+                    <Image alt="auth0-gravatar" src={user.picture} className='rounded-full' width={48} height={48}/>
+                :
+                    <CustomIcon
+                        id="sidebar-menu-button"
+                        fileName="bootstrap-people-circle"
+                        height={48}
+                        width={48}
+                        className="text-white"
+                    />
+                }
+                
+                {/* When signed in, display the name if we have it, otherwise show their email address - when not signed in, show "Sign in" */}
+                <span className='text-2xl text-white ml-4 hidden-on-mobile'>{user ? (name ? name : user.email) : `Sign In`}</span>
             </a>
             <main>
                 {children}
