@@ -9,6 +9,7 @@ import axios from "axios"
 import { GetStaticProps, NextPage } from "next"
 import React, { FormEvent, useEffect, useState } from "react"
 import styles from './rsvp.module.scss'
+import CustomIcon from "@/components/CustomIcon"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -123,7 +124,19 @@ const RSVP: NextPage<{
                     <h2 className="text-6xl text-center mb-4">Your response</h2>
                     <div className={styles.unsavedChanges}>
                         {hasUnsavedChanges && (
-                            <span>You have unsaved changes</span>
+                            <>
+                                <CustomIcon
+                                    fileName="bootstrap-exclamation-triangle-fill"
+                                    height={20}
+                                    width={20}
+                                />
+                                <span className="ml-2 mr-2">You have unsaved changes</span>
+                                <CustomIcon
+                                    fileName="bootstrap-exclamation-triangle-fill"
+                                    height={20}
+                                    width={20}
+                                />
+                            </>
                         )}
                     </div>
                     <form
