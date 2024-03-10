@@ -1,7 +1,5 @@
 import type { Knex } from "knex";
-import fs from 'fs'
 import 'dotenv/config'
-import path from "path";
 
 const config: { [key: string]: Knex.Config } = {
   development: {
@@ -27,7 +25,7 @@ const config: { [key: string]: Knex.Config } = {
       user: process.env.POSTGRES_USER_PROD,
       password: process.env.POSTGRES_PASSWORD_PROD,
       ssl: {
-        ca: fs.readFileSync(path.resolve(__dirname, "./ca-certificate.crt"))
+        rejectUnauthorized: false
       }
     },
     migrations: {
