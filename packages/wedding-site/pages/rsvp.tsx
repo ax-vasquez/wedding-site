@@ -138,7 +138,9 @@ const RSVP: NextPage<{
                             optionBLabel="No"
                             optionBHandler={() => setIsGoingLocal(false)}
                         />
-                        <button type="submit">Save Changes</button>
+                        <div className={styles.saveButtonWrapper}>
+                            <button type="submit" className="border">Save Changes</button>
+                        </div>
                     </form>
                 </div>
             </div>

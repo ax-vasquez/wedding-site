@@ -1,3 +1,5 @@
+@import '../styles/_variables';
+
 .unsavedChanges {
     color: rgb(200,200,0);
     display: flex;
@@ -6,4 +8,20 @@
     margin-bottom: 1rem;
     font-style: italic;
     height: 24px;
+}
+
+.saveButtonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    button {
+        margin-top: 2rem;
+        padding: 1rem;
+        border-radius: 6px;
+        transition: 0.2s ease;
+        &:hover {
+            transition: 0.2s ease;
+            background-color: $gray-500;
+        }
+    }
 }
