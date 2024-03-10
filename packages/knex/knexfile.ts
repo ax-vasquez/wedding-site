@@ -1,6 +1,7 @@
 import type { Knex } from "knex";
 import fs from 'fs'
 import 'dotenv/config'
+import path from "path";
 
 const config: { [key: string]: Knex.Config } = {
   development: {
@@ -20,9 +21,13 @@ const config: { [key: string]: Knex.Config } = {
   production: {
     client: "pg",
     connection: {
-      uri: process.env.POSTGRES_PROD_URL,
+      database: "wedding-site-db",
+      host: process.env.POSTGRES_HOST_PROD,
+      port: parseInt(process.env.POSTGRES_PORT_PROD),
+      user: process.env.POSTGRES_USER_PROD,
+      password: process.env.POSTGRES_PASSWORD_PROD,
       ssl: {
-        ca: fs.readFileSync('./ca-certificate.crt')
+        ca: fs.readFileSync(path.resolve(__dirname, "./ca-certificate.crt"))
       }
     },
     migrations: {
