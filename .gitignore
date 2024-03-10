@@ -2,3 +2,4 @@ node_modules
 *.log
 local-data
 .env*
+*.crt
