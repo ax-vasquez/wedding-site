@@ -3,7 +3,6 @@ import { Session, getSession } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-    console.log(`LASDFASDF`)
     if (req.method !== 'POST') {
         return res.status(400).send('Unsupported HTTP method supplied to route')
     }

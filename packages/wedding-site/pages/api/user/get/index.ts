@@ -21,8 +21,13 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     
     try {
       if (conn) {
-        const query = `SELECT * FROM users WHERE email = $1`
-        const queryRes = await conn.query(query, [user.email])
+        const selectQuery = `SELECT * FROM users WHERE email = $1`
+        let queryRes = await conn.query(selectQuery, [user.email])
+        if (queryRes.rowCount === 0) {
+          const insertQuery = `INSERT INTO users (email) VALUES ($1)`
+          await conn.query(insertQuery, [user.email])
+          queryRes = await conn.query(selectQuery, [user.email])
+        }
         return res.status(200).json(queryRes.rows[0])
       }
     } catch (e) {
