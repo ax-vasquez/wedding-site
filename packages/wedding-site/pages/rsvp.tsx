@@ -1,5 +1,4 @@
 import ParallaxImage from "@/components/ParallaxImage"
-import HighlightingLabelTag from "@/components/form/HighlightingLabelTag"
 import ToggleField from "@/components/form/ToggleField"
 import PageLayout from "@/components/layout/PageLayout"
 import { client } from "@/sanity/client"
@@ -10,6 +9,8 @@ import { GetStaticProps, NextPage } from "next"
 import React, { FormEvent, useEffect, useState } from "react"
 import styles from './rsvp.module.scss'
 import CustomIcon from "@/components/CustomIcon"
+import TextField from "@/components/form/TextField"
+import cs from 'clsx'
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -20,14 +21,14 @@ const RSVP: NextPage<{
     const [canInviteOthers, setCanInviteOthers] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)
-    const [firstName, setFirstName] = useState(null as unknown as undefined)
-    const [firstNameLocal, setFirstNameLocal] = useState(null as unknown as undefined)
-    const [lastName, setLastName] = useState(null as unknown as undefined)
-    const [lastNameLocal, setLastNameLocal] = useState(null as unknown as undefined)
-    const [horsDoeuvresSelection, setHorsDoeuvresSelection] = useState(null as unknown as undefined)
-    const [horsDoeuvresSelectionLocal, setHorsDoeuvresSelectionLocal] = useState(null as unknown as undefined)
-    const [entreeSelection, setEntreeSelection] = useState(null as unknown as undefined)
-    const [entreeSelectionLocal, setEntreeSelectionLocal] = useState(null as unknown as undefined)
+    const [firstName, setFirstName] = useState(null as unknown as string)
+    const [firstNameLocal, setFirstNameLocal] = useState(null as unknown as string)
+    const [lastName, setLastName] = useState(null as unknown as string)
+    const [lastNameLocal, setLastNameLocal] = useState(null as unknown as string)
+    const [horsDoeuvresSelection, setHorsDoeuvresSelection] = useState(null as unknown as string)
+    const [horsDoeuvresSelectionLocal, setHorsDoeuvresSelectionLocal] = useState(null as unknown as string)
+    const [entreeSelection, setEntreeSelection] = useState(null as unknown as string)
+    const [entreeSelectionLocal, setEntreeSelectionLocal] = useState(null as unknown as string)
     useEffect(() => {
         if (user && user.email) {
             axios.get(`/api/user/get`)
@@ -51,7 +52,7 @@ const RSVP: NextPage<{
                 })
                 .catch(e => console.error(e))
         }
-    })
+    }, [user])
 
     useEffect(() => {
         setIsGoingLocal(isGoing)
@@ -73,7 +74,7 @@ const RSVP: NextPage<{
         setEntreeSelectionLocal(entreeSelection)
     }, [entreeSelection])
 
-    const hasUnsavedChanges = Boolean((isGoing !== isGoingLocal) || (firstName !== firstNameLocal))
+    const hasUnsavedChanges = Boolean((isGoing !== isGoingLocal) || (firstName !== firstNameLocal) || (lastName !== lastNameLocal))
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -90,11 +91,9 @@ const RSVP: NextPage<{
                 first_name,
                 last_name,
                 is_going,
-                can_invite_others,
                 hors_doeuvres_selection,
                 entree_selection
             } = res.data.data
-            setCanInviteOthers(can_invite_others)
             setIsGoing(is_going)
             setFirstName(first_name)
             setLastName(last_name)
@@ -104,6 +103,14 @@ const RSVP: NextPage<{
             setEntreeSelectionLocal(entree_selection)
         })
         .catch(e => console.error(e))
+    }
+
+    const handleUndo = () => {
+        setIsGoingLocal(isGoing)
+        setFirstNameLocal(firstName)
+        setLastNameLocal(lastName)
+        setHorsDoeuvresSelectionLocal(horsDoeuvresSelection)
+        setEntreeSelectionLocal(entreeSelection)
     }
 
     return (
@@ -139,9 +146,33 @@ const RSVP: NextPage<{
                             </>
                         )}
                     </div>
+                    <div className={styles.undoButtonWrapper}>
+                        {hasUnsavedChanges && 
+                            <button className={cs(styles.undoButton, "text-white")} onClick={handleUndo}>
+                                <CustomIcon 
+                                    fileName="bootstrap-arrow-counterclockwise"
+                                    height={20}
+                                    width={20}
+                                />
+                                <span>undo</span>
+                            </button>
+                        }
+                    </div>
                     <form
                         onSubmit={onSubmit}
                     >
+                        <TextField
+                            localValue={firstNameLocal}
+                            currentValue={firstName}
+                            fieldLabel="First name"
+                            onChangeHandler={(e) => setFirstNameLocal(e.target.value)}
+                        />
+                        <TextField
+                            localValue={lastNameLocal}
+                            currentValue={lastName}
+                            fieldLabel="Last name"
+                            onChangeHandler={(e) => setLastNameLocal(e.target.value)}
+                        />
                         <ToggleField 
                             localSelection={isGoingLocal}
                             currentSelection={isGoing}
