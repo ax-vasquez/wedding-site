@@ -1,0 +1,16 @@
+@import '../../styles/_variables';
+
+.container {
+    width: 100%;
+    color: inherit;
+    background-color: inherit;
+    transition: 0.4s ease;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.highlight {
+    color: black;
+    background-color: rgb(200,200,0);
+    transition: 0.4s ease;
+}

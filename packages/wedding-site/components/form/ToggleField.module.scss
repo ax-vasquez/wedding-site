@@ -1,0 +1,14 @@
+
+.fieldContent {
+    span {
+        flex: 1;
+    }
+    >:last-child {
+        margin-left: 1rem;
+    }
+    .optionWrapper {
+        input {
+            margin-right: 0.25rem;
+        }
+    }
+}

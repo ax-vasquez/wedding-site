@@ -37,7 +37,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 })
                 .catch(e => console.error(e))
         }
-        
     })
 
     return (
