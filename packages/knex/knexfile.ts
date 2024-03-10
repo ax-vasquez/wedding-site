@@ -1,8 +1,6 @@
 import type { Knex } from "knex";
 import 'dotenv/config'
 
-// Update with your config settings.
-
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: "pg",
@@ -18,32 +16,17 @@ const config: { [key: string]: Knex.Config } = {
     },
   },
 
-  staging: {
-    client: "postgresql",
-    connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: "knex_migrations"
-    }
-  },
-
   production: {
-    client: "postgresql",
+    client: "pg",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
-    },
-    pool: {
-      min: 2,
-      max: 10
+      database: "wedding-site-db",
+      host: process.env.POSTGRES_HOST_PROD,
+      port: parseInt(process.env.POSTGRES_PORT_PROD),
+      user: process.env.POSTGRES_USER_PROD,
+      password: process.env.POSTGRES_PASSWORD_PROD,
+      ssl: {
+        rejectUnauthorized: false
+      }
     },
     migrations: {
       tableName: "knex_migrations"
