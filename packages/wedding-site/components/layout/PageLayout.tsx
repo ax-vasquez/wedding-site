@@ -37,7 +37,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 })
                 .catch(e => console.error(e))
         }
-    })
+    }, [user])
 
     return (
         <div className="h-full">
