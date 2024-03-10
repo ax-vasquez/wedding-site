@@ -9,6 +9,9 @@ if (!conn) {
     host: process.env.PGSQL_HOST,
     port: process.env.PGSQL_PORT ? parseInt(process.env.PGSQL_PORT) : 5432,
     database: process.env.PGSQL_DATABASE,
+    ssl: {
+      rejectUnauthorized: false,
+    }
   });
 }
 
