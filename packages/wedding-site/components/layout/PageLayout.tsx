@@ -4,9 +4,9 @@ import CustomIcon from '../CustomIcon'
 import { useDispatch } from 'react-redux'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
-import { useUser } from '@auth0/nextjs-auth0/client'
 import axios from 'axios'
 import Image from 'next/image'
+import useSessionStorage from '@/hooks/useSessionStorage'
 
 interface PageLayoutProps {
     pageTitle: string
@@ -18,7 +18,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
 
-    const { user } = useUser()
+    const user = JSON.parse(useSessionStorage('user'))
     const [name, setName] = useState(null as unknown as string)
     const dispatch = useDispatch()
 

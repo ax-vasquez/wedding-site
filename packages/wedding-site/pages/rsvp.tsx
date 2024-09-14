@@ -3,7 +3,6 @@ import ToggleField from "@/components/form/ToggleField"
 import PageLayout from "@/components/layout/PageLayout"
 import { client } from "@/sanity/client"
 import { ParallaxImageData } from "@/types"
-import { useUser } from "@auth0/nextjs-auth0/client"
 import axios from "axios"
 import { GetStaticProps, NextPage } from "next"
 import React, { FormEvent, useEffect, useState } from "react"
@@ -11,13 +10,14 @@ import styles from './rsvp.module.scss'
 import CustomIcon from "@/components/CustomIcon"
 import TextField from "@/components/form/TextField"
 import cs from 'clsx'
+import useSessionStorage from "@/hooks/useSessionStorage"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
 }> = ({
     parallaxImages
 }) => {
-    const { user } = useUser()
+    const user = JSON.parse(useSessionStorage('user'))
     const [canInviteOthers, setCanInviteOthers] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)

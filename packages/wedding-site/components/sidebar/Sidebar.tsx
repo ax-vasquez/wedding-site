@@ -5,7 +5,7 @@ import SidebarOption, { SidebarOptionConfig } from './SidebarOption'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import kebabCase from '@/util/kebabCase'
 import Image from 'next/image'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import useSessionStorage from '@/hooks/useSessionStorage'
 
 interface SidebarProps {
     
@@ -52,7 +52,7 @@ const SIDEBAR_OPTIONS = [
 
 const Sidebar: FunctionComponent<SidebarProps> = () => {
 
-    const user = useUser()
+    const user = JSON.parse(useSessionStorage('user'))
     const dispatch = useDispatch()
     const isSidebarOpen = useSelector((state: any) => state.nav.showSidebar)
 
