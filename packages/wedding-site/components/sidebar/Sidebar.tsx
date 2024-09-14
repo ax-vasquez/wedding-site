@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './Sidebar.module.scss'
 import SidebarOption, { SidebarOptionConfig } from './SidebarOption'
@@ -52,13 +52,20 @@ const SIDEBAR_OPTIONS = [
 
 const Sidebar: FunctionComponent<SidebarProps> = () => {
 
-    const user = JSON.parse(useSessionStorage('user'))
+    const [user, setUser] = useState(null as unknown as any)
+    useMemo(() => {
+        const userInSession = useSessionStorage('user')
+        if (userInSession.length > 0) {
+            setUser(JSON.parse(userInSession))
+        }
+    }, [])
+
     const dispatch = useDispatch()
     const isSidebarOpen = useSelector((state: any) => state.nav.showSidebar)
 
     const sidebarOptions = [] as SidebarOptionConfig[]
     SIDEBAR_OPTIONS.forEach(option => {
-        if (['RSVP', 'Venue', 'Itinerary'].includes(option.option.label) && user.user) {
+        if (['RSVP', 'Venue', 'Itinerary'].includes(option.option.label) && (user && user.user)) {
             sidebarOptions.push(option)
         } else if (!['RSVP', 'Venue', 'Itinerary'].includes(option.option.label)) {
             sidebarOptions.push(option)

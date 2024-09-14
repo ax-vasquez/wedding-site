@@ -6,6 +6,7 @@ import Link from "next/link";
 import ParallaxImage from "@/components/ParallaxImage";
 import { ParallaxImageData } from "@/types";
 import useSessionStorage from "@/hooks/useSessionStorage";
+import { useState, useMemo } from "react";
 
 interface HomePageProps {
   welcomePage: {
@@ -44,13 +45,21 @@ const Home: React.FC<HomePageProps> = ({
   welcomePage,
   parallaxImages
 }) => {
-  const user = JSON.parse(useSessionStorage('user'))
+
+  const [user, setUser] = useState(null as unknown as any)
+    useMemo(() => {
+        const userInSession = useSessionStorage('user')
+        if (userInSession.length > 0) {
+            setUser(JSON.parse(userInSession))
+        }
+    }, [])
+  
   const shownRootPages = [] as {
     to: string
     label: string
   }[]
   rootPages.forEach(pageConfig => {
-    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && user.user) {
+    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && (user && user.user)) {
       shownRootPages.push(pageConfig)
     } else if (!['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label)) {
       shownRootPages.push(pageConfig)

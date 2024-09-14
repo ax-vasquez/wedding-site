@@ -5,7 +5,7 @@ import { client } from "@/sanity/client"
 import { ParallaxImageData } from "@/types"
 import axios from "axios"
 import { GetStaticProps, NextPage } from "next"
-import React, { FormEvent, useEffect, useState } from "react"
+import React, { FormEvent, useEffect, useMemo, useState } from "react"
 import styles from './rsvp.module.scss'
 import CustomIcon from "@/components/CustomIcon"
 import TextField from "@/components/form/TextField"
@@ -17,7 +17,14 @@ const RSVP: NextPage<{
 }> = ({
     parallaxImages
 }) => {
-    const user = JSON.parse(useSessionStorage('user'))
+    const [user, setUser] = useState(null as unknown as any)
+    useMemo(() => {
+        const userInSession = useSessionStorage('user')
+        if (userInSession.length > 0) {
+            setUser(JSON.parse(userInSession))
+        }
+    }, [])
+
     const [canInviteOthers, setCanInviteOthers] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)

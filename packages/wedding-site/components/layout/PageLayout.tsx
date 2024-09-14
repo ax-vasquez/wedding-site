@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Sidebar from '../sidebar/Sidebar'
 import CustomIcon from '../CustomIcon'
 import { useDispatch } from 'react-redux'
@@ -18,7 +18,14 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
 
-    const user = JSON.parse(useSessionStorage('user'))
+    const [user, setUser] = useState(null as unknown as any)
+    useMemo(() => {
+        const userInSession = useSessionStorage('user')
+        if (userInSession.length > 0) {
+            setUser(JSON.parse(userInSession))
+        }
+    }, [])
+
     const [name, setName] = useState(null as unknown as string)
     const dispatch = useDispatch()
 
