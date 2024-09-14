@@ -7,6 +7,7 @@ import Head from 'next/head'
 import axios from 'axios'
 import Image from 'next/image'
 import useSessionStorage from '@/hooks/useSessionStorage'
+import Link from 'next/link'
 
 interface PageLayoutProps {
     pageTitle: string
@@ -64,24 +65,13 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     className="text-white"
                 />
             </div>
-            <a className='fixed top-5 right-5 z-20 hover:cursor-pointer inline-flex items-center'
-                href={user ? '/api/auth/logout': '/api/auth/login'}
+            {/* TODO: Make a login/logout modal here */}
+            <Link className='fixed top-5 right-5 z-20 hover:cursor-pointer inline-flex items-center'
+                href={!user ? '/api/auth/logout': '/login'}
             >
-                {user?.picture ? 
-                    <Image alt="auth0-gravatar" src={user.picture} className='rounded-full' width={48} height={48}/>
-                :
-                    <CustomIcon
-                        id="sidebar-menu-button"
-                        fileName="bootstrap-people-circle"
-                        height={48}
-                        width={48}
-                        className="text-white"
-                    />
-                }
-                
                 {/* When signed in, display the name if we have it, otherwise show their email address - when not signed in, show "Sign in" */}
                 <span className='text-2xl text-white ml-4 hidden-on-mobile'>{user ? (name ? name : user.email) : `Sign In`}</span>
-            </a>
+            </Link>
             <main>
                 {children}
             </main>
