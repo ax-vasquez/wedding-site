@@ -17,9 +17,10 @@ const RSVP: NextPage<{
 }> = ({
     parallaxImages
 }) => {
+    const userInSession = useSessionStorage('user')
     const [user, setUser] = useState(null as unknown as any)
+    
     useMemo(() => {
-        const userInSession = useSessionStorage('user')
         if (userInSession.length > 0) {
             setUser(JSON.parse(userInSession))
         }
