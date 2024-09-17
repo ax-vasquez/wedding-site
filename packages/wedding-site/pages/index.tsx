@@ -5,8 +5,8 @@ import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
 import ParallaxImage from "@/components/ParallaxImage";
 import { ParallaxImageData } from "@/types";
-import useSessionStorage from "@/hooks/useSessionStorage";
 import { useState, useMemo } from "react";
+import { useUser } from "@/hooks/useUser";
 
 interface HomePageProps {
   welcomePage: {
@@ -46,7 +46,7 @@ const Home: React.FC<HomePageProps> = ({
   parallaxImages
 }) => {
 
-  const userInSession = useSessionStorage('user')
+  const userInSession = useUser()
   const [user, setUser] = useState(null as unknown as any)
   
   useMemo(() => {

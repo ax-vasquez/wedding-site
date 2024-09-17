@@ -5,7 +5,7 @@ import SidebarOption, { SidebarOptionConfig } from './SidebarOption'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import kebabCase from '@/util/kebabCase'
 import Image from 'next/image'
-import useSessionStorage from '@/hooks/useSessionStorage'
+import { useUser } from '@/hooks/useUser'
 
 interface SidebarProps {
     
@@ -52,7 +52,7 @@ const SIDEBAR_OPTIONS = [
 
 const Sidebar: FunctionComponent<SidebarProps> = () => {
 
-    const userInSession = useSessionStorage('user')
+    const userInSession = useUser()
     const [user, setUser] = useState(null as unknown as any)
     
     useMemo(() => {

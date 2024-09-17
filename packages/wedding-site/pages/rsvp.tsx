@@ -10,14 +10,14 @@ import styles from './rsvp.module.scss'
 import CustomIcon from "@/components/CustomIcon"
 import TextField from "@/components/form/TextField"
 import cs from 'clsx'
-import useSessionStorage from "@/hooks/useSessionStorage"
+import { useUser } from "@/hooks/useUser"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
 }> = ({
     parallaxImages
 }) => {
-    const userInSession = useSessionStorage('user')
+    const userInSession = useUser()
     const [user, setUser] = useState(null as unknown as any)
     
     useMemo(() => {
@@ -26,7 +26,6 @@ const RSVP: NextPage<{
         }
     }, [])
 
-    const [canInviteOthers, setCanInviteOthers] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)
     const [firstName, setFirstName] = useState(null as unknown as string)
@@ -49,7 +48,6 @@ const RSVP: NextPage<{
                         hors_doeuvres_selection,
                         entree_selection
                     } = res.data
-                    setCanInviteOthers(can_invite_others)
                     setIsGoing(is_going)
                     setFirstName(first_name)
                     setLastName(last_name)
