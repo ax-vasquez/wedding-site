@@ -5,7 +5,7 @@ import { Stream } from 'stream'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { ApiResponseV1 } from '@/types'
 
-const API_URL = process.env.API_URL
+export const API_URL = process.env.API_URL
 
 const proxy = httpProxy.createProxyServer()
 
@@ -46,7 +46,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 		req.headers.cookie = ''
 
 		// Set auth-token header from cookie:
-		if (authToken) {
+		if (authToken && refreshToken) {
 			req.headers['auth-token'] = authToken
             req.headers['refresh-token'] = refreshToken
 		}

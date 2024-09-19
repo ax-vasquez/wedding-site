@@ -11,6 +11,7 @@ import CustomIcon from "@/components/CustomIcon"
 import TextField from "@/components/form/TextField"
 import cs from 'clsx'
 import { useUser } from "@/hooks/useUser"
+import { API_URL } from "./api/[...path]"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -31,13 +32,12 @@ const RSVP: NextPage<{
     const [entreeSelectionLocal, setEntreeSelectionLocal] = useState(null as unknown as string)
     useEffect(() => {
         if (user) {
-            axios.get(`/api/user/get`)
+            axios.get(`/api/user`)
                 .then((res) => {
                     const {
                         first_name,
                         last_name,
                         is_going,
-                        can_invite_others,
                         hors_doeuvres_selection,
                         entree_selection
                     } = res.data
@@ -77,7 +77,7 @@ const RSVP: NextPage<{
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        axios.post('/api/user/update', {
+        axios.patch(`/api/user`, {
             isGoing: isGoingLocal,
             firstName: firstNameLocal,
             lastName: lastNameLocal,
