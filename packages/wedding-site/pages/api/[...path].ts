@@ -40,6 +40,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 		const authToken = cookies.get('auth-token')
         const refreshToken = cookies.get('refresh-token')
 
+		// @ts-ignore
 		req.url = req.url.replace(/^\/api/, '')
 
 		// Don't forward cookies to the API:
@@ -56,6 +57,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 		// auth token that we want to strip out and set
 		// as an HTTP-only cookie.
 		if (isLoginOrSignup) {
+			// @ts-ignore
 			proxy.once('proxyRes', interceptAuthResponse)
 		}
 
