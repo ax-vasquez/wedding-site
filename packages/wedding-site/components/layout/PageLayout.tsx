@@ -20,7 +20,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     const [showAuthModal, setShowAuthModal] = useState(false)
 
     const dispatch = useDispatch()
-    console.log(`DERP: `, Cookies.get('user-session'))
 
     useEffect(() => {
         const str = Cookies.get('user-session')
