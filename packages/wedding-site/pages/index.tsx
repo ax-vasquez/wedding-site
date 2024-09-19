@@ -46,21 +46,14 @@ const Home: React.FC<HomePageProps> = ({
   parallaxImages
 }) => {
 
-  const userInSession = useUser()
-  const [user, setUser] = useState(null as unknown as any)
-  
-  useMemo(() => {
-      if (userInSession.length > 0) {
-          setUser(JSON.parse(userInSession))
-      }
-  }, [])
+  const user = useUser()
   
   const shownRootPages = [] as {
     to: string
     label: string
   }[]
   rootPages.forEach(pageConfig => {
-    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && (user && user.user)) {
+    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && user) {
       shownRootPages.push(pageConfig)
     } else if (!['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label)) {
       shownRootPages.push(pageConfig)

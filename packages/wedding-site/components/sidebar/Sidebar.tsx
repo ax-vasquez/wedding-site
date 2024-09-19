@@ -52,21 +52,14 @@ const SIDEBAR_OPTIONS = [
 
 const Sidebar: FunctionComponent<SidebarProps> = () => {
 
-    const userInSession = useUser()
-    const [user, setUser] = useState(null as unknown as any)
-    
-    useMemo(() => {
-        if (userInSession.length > 0) {
-            setUser(JSON.parse(userInSession))
-        }
-    }, [])
+    const user = useUser()
 
     const dispatch = useDispatch()
     const isSidebarOpen = useSelector((state: any) => state.nav.showSidebar)
 
     const sidebarOptions = [] as SidebarOptionConfig[]
     SIDEBAR_OPTIONS.forEach(option => {
-        if (['RSVP', 'Venue', 'Itinerary'].includes(option.option.label) && (user && user.user)) {
+        if (['RSVP', 'Venue', 'Itinerary'].includes(option.option.label) && user) {
             sidebarOptions.push(option)
         } else if (!['RSVP', 'Venue', 'Itinerary'].includes(option.option.label)) {
             sidebarOptions.push(option)

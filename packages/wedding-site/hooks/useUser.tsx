@@ -1,5 +1,13 @@
+import { useCookies } from "react-cookie"
 
-// Obtain the user if a token exists. Cache respones. If the user has already been fetched from the API, use the cached version
 export const useUser = () => {
-    return {} as any
+    const [cookies] = useCookies(['user-session'])
+
+    let user = null
+    const str = cookies['user-session']
+    if (str) {
+        user = str
+    }
+
+    return user
 }

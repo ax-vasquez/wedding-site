@@ -6,6 +6,7 @@ import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
 import { AuthModal, UserClaims } from '../modal/AuthModal'
 import { useCookies } from 'react-cookie'
+import { useUser } from '@/hooks/useUser'
 
 interface PageLayoutProps extends PropsWithChildren {
     pageTitle: string
@@ -16,18 +17,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
 
-    const [user, setUser] = useState(null as UserClaims)
+    const user = useUser()
     const [showAuthModal, setShowAuthModal] = useState(false)
-    const [cookies, setCookie, removeCookie] = useCookies(['user-session'])
-
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (cookies['user-session']) {
-            const data: UserClaims = JSON.parse(cookies['user-session'])
-            setUser(data)
-        }
-    }, [cookies])
 
     return (
         <div className="h-full">

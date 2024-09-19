@@ -17,14 +17,7 @@ const RSVP: NextPage<{
 }> = ({
     parallaxImages
 }) => {
-    const userInSession = useUser()
-    const [user, setUser] = useState(null as unknown as any)
-    
-    useMemo(() => {
-        if (userInSession.length > 0) {
-            setUser(JSON.parse(userInSession))
-        }
-    }, [])
+    const user = useUser()
 
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)
@@ -37,7 +30,7 @@ const RSVP: NextPage<{
     const [entreeSelection, setEntreeSelection] = useState(null as unknown as string)
     const [entreeSelectionLocal, setEntreeSelectionLocal] = useState(null as unknown as string)
     useEffect(() => {
-        if (user && user.email) {
+        if (user) {
             axios.get(`/api/user/get`)
                 .then((res) => {
                     const {
@@ -85,7 +78,6 @@ const RSVP: NextPage<{
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         axios.post('/api/user/update', {
-            email: user?.email,
             isGoing: isGoingLocal,
             firstName: firstNameLocal,
             lastName: lastNameLocal,
