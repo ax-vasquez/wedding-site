@@ -18,8 +18,8 @@ const RSVP: NextPage<{
 }> = ({
     parallaxImages
 }) => {
-    const user = useUser()
 
+    const user = useUser()
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)
     const [firstName, setFirstName] = useState(null as unknown as string)
@@ -30,6 +30,7 @@ const RSVP: NextPage<{
     const [horsDoeuvresSelectionLocal, setHorsDoeuvresSelectionLocal] = useState(null as unknown as string)
     const [entreeSelection, setEntreeSelection] = useState(null as unknown as string)
     const [entreeSelectionLocal, setEntreeSelectionLocal] = useState(null as unknown as string)
+
     useEffect(() => {
         if (user) {
             axios.get(`/api/user`)
@@ -40,7 +41,7 @@ const RSVP: NextPage<{
                         is_going,
                         hors_doeuvres_selection,
                         entree_selection
-                    } = res.data
+                    } = res.data.data.users[0]
                     setIsGoing(is_going)
                     setFirstName(first_name)
                     setLastName(last_name)
@@ -51,7 +52,7 @@ const RSVP: NextPage<{
                 })
                 .catch(e => console.error(e))
         }
-    }, [user])
+    }, [user, isGoing, firstName, lastName, isGoing, horsDoeuvresSelection, entreeSelection])
 
     useEffect(() => {
         setIsGoingLocal(isGoing)
@@ -78,27 +79,27 @@ const RSVP: NextPage<{
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         axios.patch(`/api/user`, {
-            isGoing: isGoingLocal,
-            firstName: firstNameLocal,
-            lastName: lastNameLocal,
-            horsDoeuvresSelection: horsDoeuvresSelectionLocal,
-            entreeSelection: entreeSelectionLocal
+            is_going: isGoingLocal,
+            first_name: firstNameLocal,
+            last_name: lastNameLocal,
+            hors_doeuvres_selection_id: horsDoeuvresSelectionLocal,
+            entree_selection_id: entreeSelectionLocal
         })
         .then(res => {
             const {
                 first_name,
                 last_name,
                 is_going,
-                hors_doeuvres_selection,
-                entree_selection
-            } = res.data.data
+                hors_doeuvres_selection_id,
+                entree_selection_id
+            } = res.data.data.users[0]
             setIsGoing(is_going)
             setFirstName(first_name)
             setLastName(last_name)
-            setHorsDoeuvresSelection(hors_doeuvres_selection)
-            setHorsDoeuvresSelectionLocal(hors_doeuvres_selection)
-            setEntreeSelection(entree_selection)
-            setEntreeSelectionLocal(entree_selection)
+            setHorsDoeuvresSelection(hors_doeuvres_selection_id)
+            setHorsDoeuvresSelectionLocal(hors_doeuvres_selection_id)
+            setEntreeSelection(entree_selection_id)
+            setEntreeSelectionLocal(entree_selection_id)
         })
         .catch(e => console.error(e))
     }
