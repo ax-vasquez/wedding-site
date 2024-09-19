@@ -22,6 +22,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 }) => {
     const [email, setEmail] = useState('')
     const [emailIsValid, setEmailIsValid] = useState(false)
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     // Controls the login/signup form presentation - defaults to "true" so the login form is the default form
     const [existingUser, setExistingUser] = useState(true)
     const [authError, setAuthError] = useState('')
@@ -80,12 +82,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
 
     const signupHandler = async (e: FormEvent) => {
+        e.preventDefault()
         // On successful signup, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/signup`, 
             {
                 email,
                 password,
-                inviteCode,
+                first_name: firstName,
+                last_name: lastName,
+                invite_code: inviteCode,
             },
             {
                 headers: {
@@ -116,6 +121,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         <input type='text' placeholder='Email' value={email} onChange={emailInputHandler} />
                         {(!emailIsValid && email.length > 0) && <span>Invalid email address...</span>}
                         <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}/>
+                        {!existingUser && <input type='text' placeholder='First Name' value={firstName} onChange={e => setFirstName(e.target.value)}/>}
+                        {!existingUser && <input type='text' placeholder='Last Name' value={lastName} onChange={e => setLastName(e.target.value)}/>}
                         {!existingUser && <input type='password' placeholder='Verify Password' value={passwordVerify} onChange={e => setPasswordVerify(e.target.value)}/>}
                         {!existingUser && <input type='password' placeholder='Invite Code' value={inviteCode} onChange={e => setInviteCode(e.target.value)}/>}
                         <button type="submit">Submit</button>

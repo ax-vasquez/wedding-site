@@ -93,6 +93,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 					const response: ApiResponseV1 = JSON.parse(apiResponseBody)
 
 					switch (response.status) {
+						case 201:
 						case 202: {
 							const token = response.data.token
 							const refreshToken = response.data.refresh_token
