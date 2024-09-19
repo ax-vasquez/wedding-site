@@ -27,7 +27,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             const data: UserClaims = JSON.parse(str)
             setUser(data)
         }
-    }, [])
+    }, [Cookies.get('user-session')])
 
     return (
         <div className="h-full">

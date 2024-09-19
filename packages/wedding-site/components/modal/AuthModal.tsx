@@ -68,6 +68,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         })
     }
 
+    const logoutHandler = (e: FormEvent) => {
+        e.preventDefault()
+        // On successful login, http-only cookie is set with auth-token and refresh-token
+        axios.post(`/api/logout`)
+        .catch((e: Error) => {
+            console.log(`Logout error: `, e.message)
+        }).finally(() => {
+            closeModal()
+        })
+    }
+
     const signupHandler = async (e: FormEvent) => {
         // On successful signup, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/signup`, 
@@ -96,8 +107,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             >
                 {isLoggedIn ?
                     
-                    <form>
+                    <form onSubmit={logoutHandler}>
                         <span>Logout?</span>
+                        <button type="submit">Submit</button>
                     </form>
                 :
                     <form onSubmit={existingUser ? loginHandler : signupHandler}>
