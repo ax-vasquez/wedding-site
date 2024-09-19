@@ -3,6 +3,7 @@ import Cookies from 'cookies'
 import url from 'url'
 import { Stream } from 'stream'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { ApiResponseV1 } from '@/types'
 
 const API_URL = process.env.API_URL
 
@@ -89,33 +90,51 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 			// handle it:
 			proxyRes.on('end', () => {
 				try {
-					// Extract the authToken from API's response:
-					const { data } = JSON.parse(apiResponseBody)
+					const response: ApiResponseV1 = JSON.parse(apiResponseBody)
 
-					// Set the authToken as an HTTP-only cookie.
-					// We'll also set the SameSite attribute to
-					// 'lax' for some additional CSRF protection.
-					const cookies = new Cookies(req, res)
-					cookies.set('auth-token', data.token, {
-						httpOnly: true,
-						sameSite: 'lax',
-					})
-                    cookies.set('refresh-token', data.refresh_token, {
-						httpOnly: true,
-						sameSite: 'lax',
-					})
+					switch (response.status) {
+						case 202: {
+							const token = response.data.token
+							const refreshToken = response.data.refresh_token
+							if (token && refreshToken) {
 
-					const parsedToken = parseJwt(data.token)
-					cookies.set('user-session', JSON.stringify(parsedToken), {
-						// expires: new Date(parsedToken.exp * 1000),
-						sameSite: 'lax',
-					})
+								const cookies = new Cookies(req, res)
+								cookies.set('auth-token', token, {
+									httpOnly: true,
+									maxAge: 2 * 60 * 60 * 1000,
+									path: "/",
+									sameSite: 'lax',
+								})
+								cookies.set('refresh-token', refreshToken, {
+									httpOnly: true,
+									maxAge: 2 * 60 * 60 * 1000,
+									path: "/",
+									sameSite: 'lax',
+								})
 
-					// Our response to the client won't contain
-					// the actual authToken. This way the auth token
-					// never gets exposed to the client.
-					res.status(200).json({ loggedIn: true })
-					resolve(null)
+								const parsedToken = parseJwt(token)
+								cookies.set('user-session', JSON.stringify(parsedToken), {
+									httpOnly: false,
+									maxAge: 2 * 60 * 60 * 1000,
+									path: "/",
+									sameSite: 'lax',
+								})
+
+								// Don't pass token to client
+								res.status(response.status).json({ message: "success!" })
+								resolve(null)
+							}
+							break;
+						}
+						case 401:
+						case 500: {
+							res.status(response.status).json({ message: response.message })
+							resolve(null)
+						}
+						default: {
+							break;
+						}
+					}
 				} catch (err) {
 					reject(err)
 				}

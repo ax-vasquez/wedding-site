@@ -23,3 +23,12 @@ export type VenueInfoItemData = {
     roomAmenities: string[]
     dogAmenities: string[]
 }
+
+export type ApiResponseV1 = {
+    status: number
+    message: string
+    data: {
+        token: string | null
+        refresh_token: string | null
+    }
+}
