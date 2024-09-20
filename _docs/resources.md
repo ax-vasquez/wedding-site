@@ -22,10 +22,12 @@ A list of useful references used while developing this API.
 * 
 
 #### Repositories
+
 * 
 
 #### Issues
-* 
+
+* [Fixing `405` stemming from undefined `x-forwarded-port` in Vercel deployment when using http-proxy](https://github.com/vercel/next.js/issues/61133#issuecomment-1913532065) (does not happen locally)
 
 ### Reddit
 

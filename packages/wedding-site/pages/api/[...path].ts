@@ -77,6 +77,9 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 			// the client-response ourselves (since we don't
 			// want to pass along the auth token).
 			selfHandleResponse: isLoginOrSignup,
+
+			// Prevent 405 errors in deployment
+			xfwd: true
 		})
 
 		function interceptAuthResponse(proxyRes: Stream, req: NextApiRequest, res: NextApiResponse) {
