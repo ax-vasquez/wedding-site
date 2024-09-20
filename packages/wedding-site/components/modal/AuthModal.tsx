@@ -48,6 +48,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         setEmailIsValid(validateEmail(email))
     }, [email])
 
+    const resetInputFields = () => {
+        setEmail('')
+        setFirstName('')
+        setLastName('')
+        setPassword('')
+        setPasswordVerify('')
+    }
+
     const loginHandler = (e: FormEvent) => {
         e.preventDefault()
         // On successful login, http-only cookie is set with auth-token and refresh-token
@@ -61,7 +69,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     "Content-Type": "application/json"
                 }
             }    
-        ).catch((e: AxiosError) => {
+        ).then(res => {
+            closeModal()
+            resetInputFields()
+        })
+        .catch((e: AxiosError) => {
             switch(e.response?.status) {
                 case 401:
                     window.alert("Invalid credentials!")
@@ -83,6 +95,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         axios.post(`/api/logout`)
         .catch((e: AxiosError) => {
             window.alert(e.message)
+        }).finally(() => {
+            closeModal()
+            resetInputFields()
         })
     }
 
@@ -102,7 +117,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     "Content-Type": "application/json"
                 }
             }    
-        ).catch((e: AxiosError) => {
+        ).then(res => {
+            closeModal()
+            resetInputFields()
+        })
+        .catch((e: AxiosError) => {
             switch(e.response?.status) {
                 case 401:
                     window.alert("Invalid credentials")
@@ -127,8 +146,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 {isLoggedIn ?
                     
                     <form onSubmit={logoutHandler} className={styles.authForm}>
-                        <span>Logout?</span>
-                        <button type="submit">Submit</button>
+                        <button className={styles.logoutBtn} type="submit">Logout</button>
                     </form>
                 :
                     <form onSubmit={existingUser ? loginHandler : signupHandler} className={styles.authForm}>

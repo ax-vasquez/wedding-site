@@ -13,7 +13,7 @@ export const useUser = () => {
         } else {
             setUser(null)
         }
-    }, [])
+    }, [cookies])
 
     return user
 }

@@ -35,3 +35,14 @@
         color: $gray-800;
     }
 }
+
+.logoutBtn {
+    color: white;
+    background-color: rgba(200, 0, 0, 0.5);
+    transition: 0.3s ease;
+    border-radius: 4px;
+    &:hover {
+        transition: 0.3s ease;
+        background-color: rgba(200, 0, 0, 1);
+    }
+}
