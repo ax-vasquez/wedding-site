@@ -4,14 +4,14 @@ import type { AppProps } from 'next/app'
 
 import { Provider } from 'react-redux'
 import store from '../redux/store'
-import { UserProvider } from '@auth0/nextjs-auth0/client'
+import { CookiesProvider } from 'react-cookie';
  
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <UserProvider>
+    <CookiesProvider>
       <Provider store={store}>
         <Component {...pageProps} />
       </Provider>
-    </UserProvider>
+    </CookiesProvider>
   )
 }

@@ -3,22 +3,23 @@ import ToggleField from "@/components/form/ToggleField"
 import PageLayout from "@/components/layout/PageLayout"
 import { client } from "@/sanity/client"
 import { ParallaxImageData } from "@/types"
-import { useUser } from "@auth0/nextjs-auth0/client"
 import axios from "axios"
 import { GetStaticProps, NextPage } from "next"
-import React, { FormEvent, useEffect, useState } from "react"
+import React, { FormEvent, useEffect, useMemo, useState } from "react"
 import styles from './rsvp.module.scss'
 import CustomIcon from "@/components/CustomIcon"
 import TextField from "@/components/form/TextField"
 import cs from 'clsx'
+import { useUser } from "@/hooks/useUser"
+import { API_URL } from "./api/[...path]"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
 }> = ({
     parallaxImages
 }) => {
-    const { user } = useUser()
-    const [canInviteOthers, setCanInviteOthers] = useState(false)
+
+    const user = useUser()
     const [isGoing, setIsGoing] = useState(false)
     const [isGoingLocal, setIsGoingLocal] = useState(false)
     const [firstName, setFirstName] = useState(null as unknown as string)
@@ -29,19 +30,18 @@ const RSVP: NextPage<{
     const [horsDoeuvresSelectionLocal, setHorsDoeuvresSelectionLocal] = useState(null as unknown as string)
     const [entreeSelection, setEntreeSelection] = useState(null as unknown as string)
     const [entreeSelectionLocal, setEntreeSelectionLocal] = useState(null as unknown as string)
+
     useEffect(() => {
-        if (user && user.email) {
-            axios.get(`/api/user/get`)
+        if (user) {
+            axios.get(`/api/user`)
                 .then((res) => {
                     const {
                         first_name,
                         last_name,
                         is_going,
-                        can_invite_others,
                         hors_doeuvres_selection,
                         entree_selection
-                    } = res.data
-                    setCanInviteOthers(can_invite_others)
+                    } = res.data.data.users[0]
                     setIsGoing(is_going)
                     setFirstName(first_name)
                     setLastName(last_name)
@@ -52,7 +52,7 @@ const RSVP: NextPage<{
                 })
                 .catch(e => console.error(e))
         }
-    }, [user])
+    }, [user, isGoing, firstName, lastName, isGoing, horsDoeuvresSelection, entreeSelection])
 
     useEffect(() => {
         setIsGoingLocal(isGoing)
@@ -78,29 +78,28 @@ const RSVP: NextPage<{
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        axios.post('/api/user/update', {
-            email: user?.email,
-            isGoing: isGoingLocal,
-            firstName: firstNameLocal,
-            lastName: lastNameLocal,
-            horsDoeuvresSelection: horsDoeuvresSelectionLocal,
-            entreeSelection: entreeSelectionLocal
+        axios.patch(`/api/user`, {
+            is_going: isGoingLocal,
+            first_name: firstNameLocal,
+            last_name: lastNameLocal,
+            hors_doeuvres_selection_id: horsDoeuvresSelectionLocal,
+            entree_selection_id: entreeSelectionLocal
         })
         .then(res => {
             const {
                 first_name,
                 last_name,
                 is_going,
-                hors_doeuvres_selection,
-                entree_selection
-            } = res.data.data
+                hors_doeuvres_selection_id,
+                entree_selection_id
+            } = res.data.data.users[0]
             setIsGoing(is_going)
             setFirstName(first_name)
             setLastName(last_name)
-            setHorsDoeuvresSelection(hors_doeuvres_selection)
-            setHorsDoeuvresSelectionLocal(hors_doeuvres_selection)
-            setEntreeSelection(entree_selection)
-            setEntreeSelectionLocal(entree_selection)
+            setHorsDoeuvresSelection(hors_doeuvres_selection_id)
+            setHorsDoeuvresSelectionLocal(hors_doeuvres_selection_id)
+            setEntreeSelection(entree_selection_id)
+            setEntreeSelectionLocal(entree_selection_id)
         })
         .catch(e => console.error(e))
     }

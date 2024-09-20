@@ -5,7 +5,8 @@ import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
 import ParallaxImage from "@/components/ParallaxImage";
 import { ParallaxImageData } from "@/types";
-import { useUser } from '@auth0/nextjs-auth0/client'
+import { useState, useMemo } from "react";
+import { useUser } from "@/hooks/useUser";
 
 interface HomePageProps {
   welcomePage: {
@@ -44,13 +45,15 @@ const Home: React.FC<HomePageProps> = ({
   welcomePage,
   parallaxImages
 }) => {
+
   const user = useUser()
+  
   const shownRootPages = [] as {
     to: string
     label: string
   }[]
   rootPages.forEach(pageConfig => {
-    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && user.user) {
+    if (['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label) && user) {
       shownRootPages.push(pageConfig)
     } else if (!['RSVP', 'Venue', 'Itinerary'].includes(pageConfig.label)) {
       shownRootPages.push(pageConfig)

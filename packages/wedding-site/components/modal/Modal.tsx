@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import CustomIcon from '../CustomIcon'
 
-const Modal: React.FC<{
+interface ModalProps extends PropsWithChildren {
     title: string,
-    children?: any
     isOpen: boolean
     closeHandler: () => void
-}> = ({
+}
+
+const Modal: React.FC<ModalProps> = ({
     title,
     children,
     isOpen,
