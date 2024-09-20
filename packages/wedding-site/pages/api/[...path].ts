@@ -134,12 +134,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 						}
 						case 401:
 						case 404:
-						case 500: {
+						case 500: 
+						default: {
 							res.status(response.status).json({ message: response.message })
 							resolve(null)
-						}
-						default: {
-							break;
 						}
 					}
 				} catch (err) {
