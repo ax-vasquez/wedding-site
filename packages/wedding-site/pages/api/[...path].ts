@@ -77,6 +77,9 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 			// the client-response ourselves (since we don't
 			// want to pass along the auth token).
 			selfHandleResponse: isLoginOrSignup,
+
+			// Prevents deployment error "Invalid value "undefined" for header "x-forwarded-port"" (in Vercel Logs)
+			xfwd: true
 		})
 
 		function interceptAuthResponse(proxyRes: Stream, req: NextApiRequest, res: NextApiResponse) {
