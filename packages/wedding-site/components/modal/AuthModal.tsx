@@ -1,6 +1,7 @@
 import React, { FormEvent, PropsWithChildren, useEffect, useState } from 'react'
 import Modal from './Modal'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import styles from './AuthModal.module.scss'
 
 interface AuthModalProps {
     isLoggedIn: boolean
@@ -26,7 +27,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     const [lastName, setLastName] = useState('')
     // Controls the login/signup form presentation - defaults to "true" so the login form is the default form
     const [existingUser, setExistingUser] = useState(true)
-    const [authError, setAuthError] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVerify, setPasswordVerify] = useState('')
     const [inviteCode, setInviteCode] = useState('')
@@ -61,12 +61,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     "Content-Type": "application/json"
                 }
             }    
-        ).then(() => {
-            
-        }).catch((e: Error) => {
-            console.log(`Login error: `, e.message)
-        }).finally(() => {
-            closeModal()
+        ).catch((e: AxiosError) => {
+            switch(e.response?.status) {
+                case 401:
+                    window.alert("Invalid credentials!")
+                    break;
+                case 404:
+                    window.alert("User not found!")
+                    break;
+                case 500:
+                default:
+                    window.alert("An unexpected error occurred...")
+                    break;
+            }
         })
     }
 
@@ -74,10 +81,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         e.preventDefault()
         // On successful login, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/logout`)
-        .catch((e: Error) => {
-            console.log(`Logout error: `, e.message)
-        }).finally(() => {
-            closeModal()
+        .catch((e: AxiosError) => {
+            window.alert(e.message)
         })
     }
 
@@ -97,39 +102,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     "Content-Type": "application/json"
                 }
             }    
-        ).catch(e => {
-            console.log(`Signup error: `, e)
-        }).finally(() => {
-            closeModal()
+        ).catch((e: AxiosError) => {
+            switch(e.response?.status) {
+                case 401:
+                    window.alert("Invalid credentials")
+                    break;
+                case 404:
+                    window.alert("User not found")
+                    break;
+                case 500:
+                default:
+                    window.alert("Unexpected error...")
+                    break;
+            }
         })
     }
 
     return (
         <Modal
-                title={isLoggedIn ? 'Logout' : 'Login'}
+                title={isLoggedIn ? 'Logout' : (existingUser ?  `Login` : `Register`)}
                 isOpen={showModal}
                 closeHandler={() => closeModal()}
             >
                 {isLoggedIn ?
                     
-                    <form onSubmit={logoutHandler}>
+                    <form onSubmit={logoutHandler} className={styles.authForm}>
                         <span>Logout?</span>
                         <button type="submit">Submit</button>
                     </form>
                 :
-                    <form onSubmit={existingUser ? loginHandler : signupHandler}>
+                    <form onSubmit={existingUser ? loginHandler : signupHandler} className={styles.authForm}>
                         <input type='text' placeholder='Email' value={email} onChange={emailInputHandler} />
-                        {(!emailIsValid && email.length > 0) && <span>Invalid email address...</span>}
-                        <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}/>
                         {!existingUser && <input type='text' placeholder='First Name' value={firstName} onChange={e => setFirstName(e.target.value)}/>}
                         {!existingUser && <input type='text' placeholder='Last Name' value={lastName} onChange={e => setLastName(e.target.value)}/>}
+                        <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}/>
                         {!existingUser && <input type='password' placeholder='Verify Password' value={passwordVerify} onChange={e => setPasswordVerify(e.target.value)}/>}
                         {!existingUser && <input type='password' placeholder='Invite Code' value={inviteCode} onChange={e => setInviteCode(e.target.value)}/>}
-                        <button type="submit">Submit</button>
-                        <button onClick={(e) => {
+                        <button type="submit" className={styles.submitBtn}>Submit</button>
+                        <button className={styles.loginRegisterToggleBtn} onClick={(e) => {
                             e.preventDefault()
                             setExistingUser(!existingUser)
-                        }}>{existingUser ? "New User?" : "Existing User?"}</button>
+                        }}>{existingUser ? "New Guest?" : "Already Registered?"}</button>
                     </form>
                 }
             </Modal>
