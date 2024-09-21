@@ -23,6 +23,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     closeModal
 }) => {
     const [email, setEmail] = useState('')
+    const [authError, setAuthError] = useState('')
     const [loading, setLoading] = useState(false)
     const [emailIsValid, setEmailIsValid] = useState(false)
     const [firstName, setFirstName] = useState('')
@@ -45,6 +46,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     const emailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
     }
+
+    useEffect(() => {
+        setAuthError('')
+    }, [email, firstName, lastName, existingUser, password, passwordVerify])
 
     useEffect(() => {
         setEmailIsValid(validateEmail(email))
@@ -76,19 +81,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             closeModal()
             resetInputFields()
         })
-        .catch((e: AxiosError) => {
-            switch(e.response?.status) {
-                case 401:
-                    window.alert("Invalid credentials!")
-                    break;
-                case 404:
-                    window.alert("User not found!")
-                    break;
-                case 500:
-                default:
-                    window.alert("An unexpected error occurred...")
-                    break;
-            }
+        .catch((e: AxiosError<{ message: string }>) => {
+            setAuthError(e.response?.data?.message || '')
         })
         .finally(() => setLoading(false))
     }
@@ -107,7 +101,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         })
     }
 
-    const signupHandler = async (e: FormEvent) => {
+    const signupHandler = (e: FormEvent) => {
         setLoading(true)
         e.preventDefault()
         // On successful signup, http-only cookie is set with auth-token and refresh-token
@@ -128,19 +122,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             closeModal()
             resetInputFields()
         })
-        .catch((e: AxiosError) => {
-            switch(e.response?.status) {
-                case 401:
-                    window.alert("Invalid credentials")
-                    break;
-                case 404:
-                    window.alert("User not found")
-                    break;
-                case 500:
-                default:
-                    window.alert("Unexpected error...")
-                    break;
-            }
+        .catch((e: AxiosError<{ message: string }>) => {
+            setAuthError(e.response?.data?.message || '')
         })
         .finally(() => setLoading(false))
     }
@@ -172,6 +155,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         }}>{existingUser ? "New Guest?" : "Already Registered?"}</button>
                     </form>
                 }
+                <div className={styles.authErrorWrapper}>
+                    <span>{authError}</span>
+                </div>
             </Modal>
     )
 
