@@ -2,7 +2,7 @@
 
 .authForm {
     margin-top: 1rem;
-    padding: 0 2rem;
+    padding: 0 2rem 1rem 2rem;
     display: flex;
     flex-direction: column;
     input {
@@ -13,6 +13,12 @@
     >:not(:last-child) {
         margin-bottom: 0.5rem;
     }
+}
+
+.loadingOverlay {
+    height: 100%;
+    width: 100%;
+    background-color: black;
 }
 
 .submitBtn {

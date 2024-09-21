@@ -2,6 +2,7 @@ import React, { FormEvent, PropsWithChildren, useEffect, useState } from 'react'
 import Modal from './Modal'
 import axios, { AxiosError } from 'axios'
 import styles from './AuthModal.module.scss'
+import { Spinner } from '../Spinner'
 
 interface AuthModalProps {
     isLoggedIn: boolean
@@ -22,6 +23,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     closeModal
 }) => {
     const [email, setEmail] = useState('')
+    const [loading, setLoading] = useState(false)
     const [emailIsValid, setEmailIsValid] = useState(false)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -57,6 +59,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
 
     const loginHandler = (e: FormEvent) => {
+        setLoading(true)
         e.preventDefault()
         // On successful login, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/login`, 
@@ -87,21 +90,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     break;
             }
         })
+        .finally(() => setLoading(false))
     }
 
     const logoutHandler = (e: FormEvent) => {
+        setLoading(true)
         e.preventDefault()
         // On successful login, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/logout`)
         .catch((e: AxiosError) => {
             window.alert(e.message)
         }).finally(() => {
-            closeModal()
             resetInputFields()
+            setLoading(false)
+            closeModal()
         })
     }
 
     const signupHandler = async (e: FormEvent) => {
+        setLoading(true)
         e.preventDefault()
         // On successful signup, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/signup`, 
@@ -135,6 +142,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     break;
             }
         })
+        .finally(() => setLoading(false))
     }
 
     return (
@@ -142,6 +150,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 title={isLoggedIn ? 'Logout' : (existingUser ?  `Login` : `Register`)}
                 isOpen={showModal}
                 closeHandler={() => closeModal()}
+                loading={loading}
             >
                 {isLoggedIn ?
                     
