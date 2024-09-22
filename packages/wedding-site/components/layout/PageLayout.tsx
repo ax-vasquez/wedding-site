@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
 import { toggleShowSidebar } from '@/redux/sidebarSlice'
 import Head from 'next/head'
 import { AuthModal, UserClaims } from '../modal/AuthModal'
-import { useCookies } from 'react-cookie'
 import { useUser } from '@/hooks/useUser'
+import { useRouter } from 'next/navigation'
 
 interface PageLayoutProps extends PropsWithChildren {
     pageTitle: string
@@ -17,9 +17,19 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     children
 }) => {
 
+    const router = useRouter()
     const user = useUser()
     const [showAuthModal, setShowAuthModal] = useState(false)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (!user) {
+            setShowAuthModal(true)
+            router.push('/')
+        } else {
+            setShowAuthModal(false)
+        }
+    }, [user])
 
     return (
         <div className="h-full">
