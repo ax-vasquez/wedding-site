@@ -2,7 +2,7 @@ import React, { FormEvent, PropsWithChildren, useEffect, useState } from 'react'
 import Modal from './Modal'
 import axios, { AxiosError } from 'axios'
 import styles from './AuthModal.module.scss'
-import { Spinner } from '../Spinner'
+import { useRouter } from 'next/navigation'
 
 interface AuthModalProps {
     isLoggedIn: boolean
@@ -22,14 +22,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     showModal,
     closeModal
 }) => {
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [authError, setAuthError] = useState('')
     const [loading, setLoading] = useState(false)
     const [emailIsValid, setEmailIsValid] = useState(false)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    // Controls the login/signup form presentation - defaults to "true" so the login form is the default form
-    const [existingUser, setExistingUser] = useState(true)
+    const [existingUser, setExistingUser] = useState(false)
     const [password, setPassword] = useState('')
     const [passwordVerify, setPasswordVerify] = useState('')
     const [inviteCode, setInviteCode] = useState('')
@@ -77,14 +77,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     "Content-Type": "application/json"
                 }
             }    
-        ).then(res => {
-            closeModal()
-            resetInputFields()
-        })
+        )
         .catch((e: AxiosError<{ message: string }>) => {
             setAuthError(e.response?.data?.message || '')
         })
-        .finally(() => setLoading(false))
+        .finally(() => {
+            closeModal()
+            resetInputFields()
+            setLoading(false)
+            router.push('/rsvp')
+        })
     }
 
     const logoutHandler = (e: FormEvent) => {
@@ -95,9 +97,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         .catch((e: AxiosError) => {
             window.alert(e.message)
         }).finally(() => {
+            closeModal()
             resetInputFields()
             setLoading(false)
-            closeModal()
+            router.push('/')
         })
     }
 
@@ -118,23 +121,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     "Content-Type": "application/json"
                 }
             }    
-        ).then(res => {
-            closeModal()
-            resetInputFields()
-        })
+        )
         .catch((e: AxiosError<{ message: string }>) => {
             setAuthError(e.response?.data?.message || '')
         })
-        .finally(() => setLoading(false))
+        .finally(() => {
+            closeModal()
+            resetInputFields()
+            setLoading(false)
+            router.push('/rsvp')
+        })
     }
 
     return (
         <Modal
                 title={isLoggedIn ? 'Logout' : (existingUser ?  `Login` : `Register`)}
                 isOpen={showModal}
-                closeHandler={() => closeModal()}
+                closeHandler={() => {
+                    if (isLoggedIn) {
+                        closeModal()
+                    }
+                }}
                 loading={loading}
             >
+                <span className={styles.prompt}>{existingUser ? `Login` : `Register`} to RSVP{existingUser && ` or manage your preferences` }</span>
                 {isLoggedIn ?
                     
                     <form onSubmit={logoutHandler} className={styles.authForm}>

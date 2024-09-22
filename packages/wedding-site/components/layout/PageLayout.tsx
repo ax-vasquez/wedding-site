@@ -21,6 +21,14 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     const [showAuthModal, setShowAuthModal] = useState(false)
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        if (!user) {
+            setShowAuthModal(true)
+        } else {
+            setShowAuthModal(false)
+        }
+    }, [user])
+
     return (
         <div className="h-full">
             <Head>

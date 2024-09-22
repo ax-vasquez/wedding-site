@@ -15,6 +15,17 @@
     }
 }
 
+.prompt {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    color: $gray-500;
+    font-weight: 100;
+    padding: 0 2rem;
+}
+
 .loadingOverlay {
     height: 100%;
     width: 100%;
@@ -26,6 +37,7 @@
     color: white;
     border-radius: 4px;
     transition: 0.3s ease;
+    margin-top: 2rem;
     &:hover{
         transition: 0.3s ease;
         background-color: $gray-500;
@@ -54,7 +66,7 @@
 }
 
 .authErrorWrapper {
-    padding: 0 2rem 2rem 2rem;
+    padding: 0 2rem 1rem 2rem;
     display: flex;
     span {
         border-radius: 4px;

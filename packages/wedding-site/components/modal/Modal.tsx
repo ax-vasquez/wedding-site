@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import CustomIcon from '../CustomIcon'
 import { Spinner } from '../Spinner'
-import cs from 'clsx'
 import styles from './Modal.module.scss'
 
 interface ModalProps extends PropsWithChildren {
