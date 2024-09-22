@@ -144,7 +144,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 }}
                 loading={loading}
             >
-                <span className={styles.prompt}>{existingUser ? `Login` : `Register`} to RSVP{existingUser && ` or manage your preferences` }</span>
+                {!isLoggedIn && <span className={styles.prompt}>{existingUser ? `Login` : `Register`} to RSVP{existingUser && ` or manage your preferences` }</span>}
                 {isLoggedIn ?
                     
                     <form onSubmit={logoutHandler} className={styles.authForm}>
