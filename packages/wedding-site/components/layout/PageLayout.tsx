@@ -25,7 +25,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     useEffect(() => {
         if (!user) {
             setShowAuthModal(true)
-            router.push('/')
         } else {
             setShowAuthModal(false)
         }
