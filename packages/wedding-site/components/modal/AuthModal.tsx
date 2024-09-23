@@ -3,6 +3,7 @@ import Modal from './Modal'
 import axios, { AxiosError } from 'axios'
 import styles from './AuthModal.module.scss'
 import { useRouter } from 'next/navigation'
+import { HideableTextField } from './fields/HideableTextField'
 
 interface AuthModalProps {
     isLoggedIn: boolean
@@ -155,9 +156,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         <input type='text' placeholder='Email' value={email} onChange={emailInputHandler} />
                         {!existingUser && <input type='text' placeholder='First Name' value={firstName} onChange={e => setFirstName(e.target.value)}/>}
                         {!existingUser && <input type='text' placeholder='Last Name' value={lastName} onChange={e => setLastName(e.target.value)}/>}
-                        <input type='password' placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}/>
-                        {!existingUser && <input type='password' placeholder='Verify Password' value={passwordVerify} onChange={e => setPasswordVerify(e.target.value)}/>}
-                        {!existingUser && <input type='password' placeholder='Invite Code' value={inviteCode} onChange={e => setInviteCode(e.target.value)}/>}
+                        <HideableTextField 
+                            value={password}
+                            placeholder={`Password`}
+                            onChangeHandler={e => setPassword(e.target.value)}
+                        />
+                        {!existingUser && <HideableTextField 
+                            value={passwordVerify}
+                            placeholder={`Verify Password`}
+                            onChangeHandler={e => setPasswordVerify(e.target.value)}
+                        />}
+                        {!existingUser && <HideableTextField 
+                            value={inviteCode}
+                            placeholder={`Invite Code`}
+                            onChangeHandler={e => setInviteCode(e.target.value)}
+                        />}
                         <button type="submit" className={styles.submitBtn}>Submit</button>
                         <button className={styles.loginRegisterToggleBtn} onClick={(e) => {
                             e.preventDefault()
