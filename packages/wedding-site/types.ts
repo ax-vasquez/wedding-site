@@ -24,11 +24,17 @@ export type VenueInfoItemData = {
     dogAmenities: string[]
 }
 
+export type UserInvitee = {
+    first_name: string
+    last_name: string
+}
+
 export type ApiResponseV1 = {
     status: number
     message: string
     data: {
         token: string | null
         refresh_token: string | null
+        invitees: UserInvitee | null
     }
 }

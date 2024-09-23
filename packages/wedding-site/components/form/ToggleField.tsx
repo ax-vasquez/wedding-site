@@ -23,7 +23,6 @@ const ToggleField: React.FC<ToggleFieldProps> = ({
     optionBLabel,
     optionBHandler
 }) => {
-    console.log(`SELECTIONS - LOCAL: ${localSelection} | CURRENT: ${currentSelection}`)
     return (
         <HighlightingLabelTag
             hasUnsavedChange={localSelection !== currentSelection}

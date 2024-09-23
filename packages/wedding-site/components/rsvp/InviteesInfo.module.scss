@@ -1,0 +1,43 @@
+@import '../styles/_variables';
+
+.container {
+    margin-top: 2rem;
+}
+
+.inviteesListWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    h2 {
+        font-size: 48px;
+    }
+    button {
+        margin-top: 2rem;
+        padding: 1rem;
+        border-radius: 6px;
+        transition: 0.2s ease;
+        &:hover {
+            transition: 0.2s ease;
+            background-color: $gray-500;
+        }
+    }
+    ul {
+        margin-top: 1rem;
+        width: 100%;
+        // align-items: center;
+        // justify-content: center;
+        text-align: center;
+        border-top: 1px solid $gray-500;
+        border-bottom: 1px solid $gray-500;
+        li {
+            padding: 1rem 0;
+        }
+    }
+}
+
+.emptyListItem {
+    font-style: italic;
+    font-weight: 100;
+}

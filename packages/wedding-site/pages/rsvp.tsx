@@ -12,6 +12,7 @@ import TextField from "@/components/form/TextField"
 import cs from 'clsx'
 import { useUser } from "@/hooks/useUser"
 import { API_URL } from "./api/[...path]"
+import { InviteesInfo } from "@/components/rsvp/InviteesInfo"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -127,7 +128,7 @@ const RSVP: NextPage<{
             />
             <div className="text-content text-white py-7">
                 <div>
-                    <h2 className="text-6xl text-center mb-4">Your response</h2>
+                    <h2 className="text-6xl text-center mb-4">We hope you're able to attend!</h2>
                     <div className={styles.unsavedChanges}>
                         {hasUnsavedChanges && (
                             <>
@@ -182,8 +183,9 @@ const RSVP: NextPage<{
                             optionBHandler={() => setIsGoingLocal(false)}
                         />
                         <div className={styles.saveButtonWrapper}>
-                            <button type="submit" className="border">Save Changes</button>
+                            <button type="submit" className="border">Submit Response</button>
                         </div>
+                        <InviteesInfo />
                     </form>
                 </div>
             </div>
