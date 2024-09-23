@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({
             <div
                 className="fixed z-30 w-full h-full bg-black opacity-80"
             />
-            <div className="fixed top-1/2 z-40 rounded-sm left-1/2 w-1/2 bg-white modal">
+            <div className="fixed top-1/2 z-40 rounded-sm left-1/2 bg-white modal sm:w-full md:w-1/2 lg:w-1/4">
                 {loading && (
                     <div className={styles.spinnerWrapper}>
                         <Spinner />

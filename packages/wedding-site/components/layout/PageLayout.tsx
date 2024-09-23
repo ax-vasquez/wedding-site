@@ -56,7 +56,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 onClick={() => setShowAuthModal(true)}
             >
                 {/* When signed in, display the name if we have it, otherwise show their email address - when not signed in, show "Sign in" */}
-                <span className='text-2xl text-white ml-4 hidden-on-mobile'>{user ? user.first_name : `Sign In`}</span>
+                <span className='text-2xl text-white ml-4'>{user ? user.first_name : `Sign In`}</span>
             </button>
             <main>
                 {children}
