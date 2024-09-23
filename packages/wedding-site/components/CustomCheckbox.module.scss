@@ -1,0 +1,28 @@
+@import '../styles/_variables';
+
+.container {
+    position: relative;
+    border: 2px solid $gray-100;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerChecked {
+    box-shadow: 5px solid $gray-100;
+    transition: 0.3s ease;
+}
+
+.icon {
+    transition: 0.3s ease;
+    color: $gray-100;
+}
+
+.iconHidden {
+    transition: 0.3s ease;
+    color: transparent;
+}
