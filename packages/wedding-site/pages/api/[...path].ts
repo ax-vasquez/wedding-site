@@ -107,13 +107,13 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 								const cookies = new Cookies(req, res)
 								cookies.set('auth-token', token, {
 									httpOnly: true,
-									maxAge: 2 * 60 * 60 * 1000,
+									maxAge: 24 * 60 * 60 * 1000,
 									path: "/",
 									sameSite: 'lax',
 								})
 								cookies.set('refresh-token', refreshToken, {
 									httpOnly: true,
-									maxAge: 2 * 60 * 60 * 1000,
+									maxAge: 24 * 60 * 60 * 1000,
 									path: "/",
 									sameSite: 'lax',
 								})
@@ -121,7 +121,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 								const parsedToken = parseJwt(token)
 								cookies.set('user-session', JSON.stringify(parsedToken), {
 									httpOnly: false,
-									maxAge: 2 * 60 * 60 * 1000,
+									maxAge: 24 * 60 * 60 * 1000,
 									path: "/",
 									sameSite: 'lax',
 								})

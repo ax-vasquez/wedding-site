@@ -5,7 +5,6 @@ import PageLayout from "@/components/layout/PageLayout";
 import Link from "next/link";
 import ParallaxImage from "@/components/ParallaxImage";
 import { ParallaxImageData } from "@/types";
-import { useState, useMemo } from "react";
 import { useUser } from "@/hooks/useUser";
 
 interface HomePageProps {
