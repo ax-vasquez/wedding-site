@@ -25,6 +25,7 @@ export type VenueInfoItemData = {
 }
 
 export type UserInvitee = {
+    id: string
     first_name: string
     last_name: string
 }

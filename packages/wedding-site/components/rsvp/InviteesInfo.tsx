@@ -5,6 +5,7 @@ import cs from 'clsx'
 import styles from './InviteesInfo.module.scss'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import router from 'next/router'
+import CustomIcon from '../CustomIcon'
 
 interface InviteesInfoProps {
 
@@ -16,9 +17,9 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
 
     const [loadingInvitees, setLoadingInvitees] = useState(false)
     const [creatingNewPlusOne, setCreatingNewPlusOne] = useState(false)
-    const [plusOneFirstName, setPlusOneFirstName] = useState('')
+    const [plusOneFirstName, _setPlusOneFirstName] = useState('')
     const [plusOneFirstNameLocal, setPlusOneFirstNameLocal] = useState('')
-    const [plusOneLastName, setPlusOneLastName] = useState('')
+    const [plusOneLastName, _setPlusOneLastName] = useState('')
     const [plusOneLastNameLocal, setPlusOneLastNameLocal] = useState('')
 
     const [invitees, setInvitees] = useState([] as unknown as UserInvitee[])
@@ -33,6 +34,7 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
             }    
         )
         .then((res: AxiosResponse<{ status: number, message: string, data: { users: UserInvitee[] } }>) => {
+            console.log(`RES: `, res.data.data)
             setInvitees(res.data.data.users)
         })
         .catch((e: AxiosError<{ message: string }>) => {
@@ -59,8 +61,8 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
                 }
             }    
         )
-        .then((res: AxiosResponse<{}>) => {
-            console.log(`RES: `, res)
+        .then((res: AxiosResponse<{ status: number, message: string, data: { users: UserInvitee[] }}>) => {
+            // console.log(`RES: `, res.data.data)
         })
         .catch((e: AxiosError<{ message: string }>) => {
 
@@ -79,7 +81,27 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
                 <div className={cs(styles.inviteesListLoadingOverlay, loadingInvitees && styles.isLoading)} />
                 <ul>
                     {invitees.length > 0 ? 
-                        invitees.map(invitee => <li>{invitee.first_name}{` `}{invitee.last_name}</li>)
+                        invitees.map(invitee => <li key={invitee.id}>
+                            <span>{invitee.first_name}{` `}{invitee.last_name}</span>
+                            <div>
+                                <button title="Edit">
+                                    <CustomIcon
+                                        fileName="bootstrap-pencil"
+                                        height={16}
+                                        width={16}
+                                        className="text-white"
+                                    />
+                                </button>
+                                <button title="Delete">
+                                    <CustomIcon 
+                                        fileName='bootstrap-x-lg'
+                                        height={16}
+                                        width={16}
+                                        className="text-white"
+                                    />
+                                </button>
+                            </div>
+                        </li>)
                     :
                         <li className={styles.emptyListItem}>none</li>
                     }
