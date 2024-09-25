@@ -2,6 +2,7 @@ import React from 'react'
 import HighlightingLabelTag from './HighlightingLabelTag'
 import cs from 'clsx'
 import styles from './ToggleField.module.scss'
+import { CustomCheckbox } from '../CustomCheckbox'
 
 interface ToggleFieldProps {
     localSelection: boolean
@@ -29,11 +30,11 @@ const ToggleField: React.FC<ToggleFieldProps> = ({
             <div className={cs(`inline-flex w-full`, styles.fieldContent)}>
                 <span>{fieldLabel}</span>
                 <div className={styles.optionWrapper}>
-                    <input type="checkbox" checked={localSelection} onChange={optionAHandler}/>
+                    <CustomCheckbox checked={localSelection} clickHandler={optionAHandler}/>
                     <span>{optionALabel}</span>
                 </div>
                 <div className={styles.optionWrapper}>
-                    <input type="checkbox" checked={!localSelection} onChange={optionBHandler}/>
+                    <CustomCheckbox checked={!localSelection} clickHandler={optionBHandler}/>
                     <span>{optionBLabel}</span>
                 </div>
             </div>

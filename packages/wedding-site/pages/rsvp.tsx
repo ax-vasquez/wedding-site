@@ -11,7 +11,7 @@ import CustomIcon from "@/components/CustomIcon"
 import TextField from "@/components/form/TextField"
 import cs from 'clsx'
 import { useUser } from "@/hooks/useUser"
-import { API_URL } from "./api/[...path]"
+import { InviteesInfo } from "@/components/rsvp/InviteesInfo"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -74,10 +74,14 @@ const RSVP: NextPage<{
         setEntreeSelectionLocal(entreeSelection)
     }, [entreeSelection])
 
-    const hasUnsavedChanges = Boolean((isGoing !== isGoingLocal) || (firstName !== firstNameLocal) || (lastName !== lastNameLocal))
+    const hasUnsavedChanges = Boolean((isGoing !== isGoingLocal) || (firstName !== firstNameLocal) || (lastName !== lastNameLocal) || (horsDoeuvresSelection !== horsDoeuvresSelectionLocal) || (entreeSelection !== entreeSelectionLocal))
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        if (!hasUnsavedChanges) {
+            // Don't send a request if there are no changes to submit
+            return
+        }
         axios.patch(`/api/user`, {
             is_going: isGoingLocal,
             first_name: firstNameLocal,
@@ -127,7 +131,7 @@ const RSVP: NextPage<{
             />
             <div className="text-content text-white py-7">
                 <div>
-                    <h2 className="text-6xl text-center mb-4">Your response</h2>
+                    <h2 className="text-6xl text-center mb-4">We hope you&apos;re able to attend!</h2>
                     <div className={styles.unsavedChanges}>
                         {hasUnsavedChanges && (
                             <>
@@ -181,8 +185,9 @@ const RSVP: NextPage<{
                             optionBLabel="No"
                             optionBHandler={() => setIsGoingLocal(false)}
                         />
+                        <InviteesInfo />
                         <div className={styles.saveButtonWrapper}>
-                            <button type="submit" className="border">Save Changes</button>
+                            <button type="submit" className={styles.submitRsvpButton}>Save Response</button>
                         </div>
                     </form>
                 </div>

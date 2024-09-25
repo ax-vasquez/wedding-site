@@ -7,8 +7,11 @@
         margin-left: 1rem;
     }
     .optionWrapper {
-        input {
-            margin-right: 0.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+            margin-left: 0.5rem;
         }
     }
 }
