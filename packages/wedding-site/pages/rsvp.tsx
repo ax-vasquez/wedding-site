@@ -131,7 +131,7 @@ const RSVP: NextPage<{
             />
             <div className="text-content text-white py-7">
                 <div>
-                    <h2 className="text-6xl text-center mb-4">We hope you're able to attend!</h2>
+                    <h2 className="text-6xl text-center mb-4">We hope you&apos;re able to attend!</h2>
                     <div className={styles.unsavedChanges}>
                         {hasUnsavedChanges && (
                             <>
