@@ -8,12 +8,14 @@ interface InviteeRowProps {
     id: string
     firstName: string
     lastName: string
+    reloadInviteesHandler: () => void
 }
 
 export const InviteeRow: React.FC<InviteeRowProps> = ({
     id,
     firstName,
-    lastName
+    lastName,
+    reloadInviteesHandler
 }) => {
 
     const [firstNameLocal, setFirstNameLocal] = useState('')
@@ -27,11 +29,11 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
     }, [firstName, lastName])
 
     const updateInviteeHandler = () => {
-        axios.patch(`/api/user`, {
+        axios.patch(`/api/user/invitees/${id}`, {
             first_name: firstNameLocal,
             last_name: lastNameLocal,
         }).then((res: AxiosResponse<{ status: string, message: string, data: UserInvitee[] }>) => {
-            // call reload list handler
+            reloadInviteesHandler()
         })
     }
 
@@ -50,10 +52,10 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
                     }
                 </div>
                 <div>
-                    <button title="Edit" onClick={(e) => {
+                    <button title={isEditing ? "Save" : "Edit"} onClick={(e) => {
                         e.preventDefault()
                         if (isEditing) {
-                            // TODO: Submit the update
+                            updateInviteeHandler()
                         }
                         setIsEditing(!isEditing)
                     }}>

@@ -85,6 +85,7 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
                                 id={invitee.id}
                                 firstName={invitee.first_name}
                                 lastName={invitee.last_name}
+                                reloadInviteesHandler={loadInviteesHandler}
                             />
                         </li>)
                     :
