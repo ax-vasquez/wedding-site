@@ -65,6 +65,7 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
         .then(() => {
             resetAddPlusOneFields()
             loadInviteesHandler()
+            setCreatingNewPlusOne(false)
         })
         .catch((e: AxiosError<{ message: string }>) => {
 
@@ -94,7 +95,7 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
                 </ul>
             </div>
             <div className={styles.addNewBtnWrapper}>
-                <button className={styles.rsvpButton} onClick={() => setCreatingNewPlusOne(!creatingNewPlusOne)}>{creatingNewPlusOne ? `Hide Form` : `Add New`}</button>
+                <button className={styles.rsvpButton} onClick={() => setCreatingNewPlusOne(!creatingNewPlusOne)}>{creatingNewPlusOne ? `Hide Invitee Form` : `Add New`}</button>
             </div>
             {creatingNewPlusOne && (
                 <form >

@@ -20,8 +20,9 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
 
     const [firstNameLocal, setFirstNameLocal] = useState('')
     const [lastNameLocal, setLastNameLocal] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
+
+    const hasUnsavedChanges = Boolean((firstName !== firstNameLocal) || (lastName !== lastNameLocal))
 
     useEffect(() => {
         setFirstNameLocal(firstName)
@@ -29,6 +30,10 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
     }, [firstName, lastName])
 
     const updateInviteeHandler = () => {
+        if (!hasUnsavedChanges) {
+            // Don't send a request if there are no changes to submit
+            return
+        }
         axios.patch(`/api/user/invitees/${id}`, {
             first_name: firstNameLocal,
             last_name: lastNameLocal,
@@ -57,8 +62,8 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
                 <div className={styles.nameWrapper}>
                     {isEditing ? 
                         <div>
-                            <input type="text" className='text-black p-1 w-20' value={firstNameLocal} placeholder='First Name' onChange={(e) => setFirstNameLocal(e.target.value)} />
-                            <input type="text" className='text-black p-1 w-20' value={lastNameLocal} placeholder='First Name' onChange={(e) => setFirstNameLocal(e.target.value)} />
+                            <input type="text" className='text-black p-1 w-30' value={firstNameLocal} placeholder='First Name' onChange={(e) => setFirstNameLocal(e.target.value)} />
+                            <input type="text" className='text-black p-1 w-30' value={lastNameLocal} placeholder='First Name' onChange={(e) => setFirstNameLocal(e.target.value)} />
                         </div>
                     :
                         <span>{firstName}{` `}{lastName}</span>

@@ -14,16 +14,6 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    button {
-        margin-top: 2rem;
-        padding: 1rem;
-        border-radius: 6px;
-        transition: 0.2s ease;
-        &:hover {
-            transition: 0.2s ease;
-            background-color: $gray-500;
-        }
-    }
 }
 
 .undoButtonWrapper {
@@ -39,5 +29,17 @@
         span {
             margin-left: 0.25rem;
         }
+    }
+}
+
+.submitRsvpButton {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: $emerald-500;
+    transition: 0.2s ease;
+    &:hover {
+        transition: 0.2s ease;
+        background-color: $emerald-700;
     }
 }
