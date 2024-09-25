@@ -6,6 +6,7 @@ import styles from './InviteesInfo.module.scss'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import router from 'next/router'
 import CustomIcon from '../CustomIcon'
+import { InviteeRow } from './InviteeRow'
 
 interface InviteesInfoProps {
 
@@ -17,14 +18,17 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
 
     const [loadingInvitees, setLoadingInvitees] = useState(false)
     const [creatingNewPlusOne, setCreatingNewPlusOne] = useState(false)
-    const [plusOneFirstName, _setPlusOneFirstName] = useState('')
-    const [plusOneFirstNameLocal, setPlusOneFirstNameLocal] = useState('')
-    const [plusOneLastName, _setPlusOneLastName] = useState('')
-    const [plusOneLastNameLocal, setPlusOneLastNameLocal] = useState('')
+    const [plusOneFirstName, setPlusOneFirstName] = useState('')
+    const [plusOneLastName, setPlusOneLastName] = useState('')
 
     const [invitees, setInvitees] = useState([] as unknown as UserInvitee[])
 
-    useEffect(() => {
+    const resetAddPlusOneFields = () => {
+        setPlusOneFirstName('')
+        setPlusOneLastName('')
+    }
+
+    const loadInviteesHandler = () => {
         setLoadingInvitees(true)
         axios.get(`/api/user/invitees`,
             {
@@ -34,26 +38,23 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
             }    
         )
         .then((res: AxiosResponse<{ status: number, message: string, data: { users: UserInvitee[] } }>) => {
-            console.log(`RES: `, res.data.data)
             setInvitees(res.data.data.users)
-        })
-        .catch((e: AxiosError<{ message: string }>) => {
-            
         })
         .finally(() => {
             setLoadingInvitees(false)
         })
+    }
 
-    }, [creatingNewPlusOne])
+    useEffect(() => {
+        loadInviteesHandler()
+    }, [])
 
     const addInviteeHandler = (e: FormEvent) => {
-        setLoadingInvitees(true)
         e.preventDefault()
-        // On successful login, http-only cookie is set with auth-token and refresh-token
         axios.post(`/api/user/add-invitee`, 
             {
-                first_name: plusOneFirstNameLocal,
-                last_name: plusOneLastNameLocal,
+                first_name: plusOneFirstName,
+                last_name: plusOneLastName,
             },
             {
                 headers: {
@@ -61,14 +62,12 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
                 }
             }    
         )
-        .then((res: AxiosResponse<{ status: number, message: string, data: { users: UserInvitee[] }}>) => {
-            // console.log(`RES: `, res.data.data)
+        .then(() => {
+            resetAddPlusOneFields()
+            loadInviteesHandler()
         })
         .catch((e: AxiosError<{ message: string }>) => {
 
-        })
-        .finally(() => {
-            setLoadingInvitees(false)
         })
     }
 
@@ -82,48 +81,36 @@ export const InviteesInfo: React.FC<InviteesInfoProps> = ({
                 <ul>
                     {invitees.length > 0 ? 
                         invitees.map(invitee => <li key={invitee.id}>
-                            <span>{invitee.first_name}{` `}{invitee.last_name}</span>
-                            <div>
-                                <button title="Edit">
-                                    <CustomIcon
-                                        fileName="bootstrap-pencil"
-                                        height={16}
-                                        width={16}
-                                        className="text-white"
-                                    />
-                                </button>
-                                <button title="Delete">
-                                    <CustomIcon 
-                                        fileName='bootstrap-x-lg'
-                                        height={16}
-                                        width={16}
-                                        className="text-white"
-                                    />
-                                </button>
-                            </div>
+                            <InviteeRow 
+                                id={invitee.id}
+                                firstName={invitee.first_name}
+                                lastName={invitee.last_name}
+                            />
                         </li>)
                     :
                         <li className={styles.emptyListItem}>none</li>
                     }
                 </ul>
             </div>
-            <button className={cs('border', styles.rsvpButton)} onClick={() => setCreatingNewPlusOne(!creatingNewPlusOne)}>{creatingNewPlusOne ? `Hide` : `Show`} Invitee Form</button>
+            <div className={styles.addNewBtnWrapper}>
+                <button className={styles.rsvpButton} onClick={() => setCreatingNewPlusOne(!creatingNewPlusOne)}>{creatingNewPlusOne ? `Hide Form` : `Add New`}</button>
+            </div>
             {creatingNewPlusOne && (
                 <form >
                     <TextField
-                        localValue={plusOneFirstNameLocal}
+                        localValue={plusOneFirstName}
                         currentValue={plusOneFirstName}
                         fieldLabel="First name"
-                        onChangeHandler={(e) => setPlusOneFirstNameLocal(e.target.value)}
+                        onChangeHandler={(e) => setPlusOneFirstName(e.target.value)}
                     />
                     <TextField
-                        localValue={plusOneLastNameLocal}
+                        localValue={plusOneLastName}
                         currentValue={plusOneLastName}
                         fieldLabel="Last name"
-                        onChangeHandler={(e) => setPlusOneLastNameLocal(e.target.value)}
+                        onChangeHandler={(e) => setPlusOneLastName(e.target.value)}
                     />
                     <div className={styles.addInviteeWrapper}>
-                        <button className={cs('border', styles.rsvpButton)} onClick={addInviteeHandler}>
+                        <button className={styles.rsvpButton} onClick={addInviteeHandler}>
                             Add Invitee
                         </button>
                     </div>

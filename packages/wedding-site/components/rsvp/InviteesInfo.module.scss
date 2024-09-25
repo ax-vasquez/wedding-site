@@ -55,8 +55,8 @@
 }
 
 .rsvpButton {
-    margin-top: 2rem;
-    padding: 1rem;
+    margin-top: 1rem;
+    padding: 0.2rem 1rem;
     border-radius: 6px;
     transition: 0.2s ease;
     &:hover {
@@ -86,4 +86,14 @@
     display: flex;
     transition: 0.3s ease;
     opacity: 50%;
+}
+
+.addNewBtnWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+        font-style: italic;
+    }
 }
