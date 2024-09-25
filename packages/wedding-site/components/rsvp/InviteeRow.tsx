@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './InviteeRow.module.scss'
 import CustomIcon from '../CustomIcon'
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { UserInvitee } from '@/types'
 
 interface InviteeRowProps {
@@ -35,7 +35,20 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
         }).then((res: AxiosResponse<{ status: string, message: string, data: UserInvitee[] }>) => {
             reloadInviteesHandler()
         })
+        .catch((e: AxiosError) => {
+            // TODO: Some kind of error handling
+        })
     }
+
+    const deleteInviteeHandler = (() => {
+        axios.delete(`/api/user/invitees/${id}`)
+        .then((res: AxiosResponse<{ status: string, message: string, data: UserInvitee[] }>) => {
+            reloadInviteesHandler()
+        })
+        .catch((e: AxiosError) => {
+            // TODO: Some kind of error handling
+        })
+    })
 
     return (
         <div className={styles.container}>
@@ -66,7 +79,7 @@ export const InviteeRow: React.FC<InviteeRowProps> = ({
                             className="text-white"
                         />
                     </button>
-                    {!isEditing && <button title="Delete">
+                    {!isEditing && <button title="Delete" onClick={() => deleteInviteeHandler()}>
                         <CustomIcon 
                             fileName='bootstrap-x-lg'
                             height={16}
