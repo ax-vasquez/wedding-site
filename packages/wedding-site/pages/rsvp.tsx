@@ -12,6 +12,7 @@ import TextField from "@/components/form/TextField"
 import cs from 'clsx'
 import { useUser } from "@/hooks/useUser"
 import { InviteesInfo } from "@/components/rsvp/InviteesInfo"
+import Link from "next/link"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -186,8 +187,17 @@ const RSVP: NextPage<{
                             optionBHandler={() => setIsGoingLocal(false)}
                         />
                         <InviteesInfo />
+                        <div className={cs(styles.reservationsPromptWrapper, isGoing && styles.visible)}>
+                            <h2>We&apos;re so glad you can make it!</h2>
+                            <span>
+                                If you haven&apos;t already, don&apos;t forget to make your reservations
+                                at the venue. You can find a link to reserve a room from our block of rooms on the Venue page. You can get 
+                                to the Venue page from the side bar, or the link below.
+                            </span>
+                            <Link href={"/venue"}>Venue Information</Link>
+                        </div>
                         <div className={styles.saveButtonWrapper}>
-                            <button type="submit" className={styles.submitRsvpButton}>Save Response</button>
+                            <button type="submit" className={styles.submitRsvpButton}>Save Changes</button>
                         </div>
                     </form>
                 </div>

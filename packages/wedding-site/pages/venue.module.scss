@@ -1,0 +1,19 @@
+@import '../styles/_variables';
+
+.reservationsWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    margin-top: 2rem;
+    border-radius: 6px;
+    background-color: $emerald-500;
+    transition: 0.2s ease;
+    width: 200px;
+    align-self: center;
+    &:hover {
+        transition: 0.2s ease;
+        background-color: $emerald-700;
+    }
+}

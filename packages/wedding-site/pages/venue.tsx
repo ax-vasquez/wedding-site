@@ -3,8 +3,10 @@ import PageLayout from "@/components/layout/PageLayout"
 import { client } from "@/sanity/client"
 import { ParallaxImageData, VenueInfoItemData } from "@/types"
 import { PortableText } from "@portabletext/react"
+import axios, { AxiosResponse } from "axios"
 import { GetStaticProps, NextPage } from "next"
-import React from "react"
+import React, { useEffect, useState } from "react"
+import styles from './venue.module.scss'
 
 const Venue: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -13,6 +15,19 @@ const Venue: NextPage<{
     parallaxImages,
     venueInfo
 }) => {
+
+    const [reservationsLink, setReservationsLink] = useState('')
+
+    useEffect(() => {
+        axios.get(`/api/venue/reservation-link`)
+        .then((res: AxiosResponse<{ data: { link: string } }>) => {
+            setReservationsLink(res.data.data.link)
+        })
+        .catch(e => {
+            // TODO
+        })
+    })
+
     return (
         <PageLayout
             pageTitle="Venue"
@@ -43,6 +58,23 @@ const Venue: NextPage<{
                             <PortableText
                                 value={venue.venueAddress}
                             />
+                            
+                            {reservationsLink.length > 0 && 
+                            <div className={styles.reservationsWrapper}>
+                                <h2 className="text-3xl mb-4 mt-4">
+                                    Event Reservations
+                                </h2>
+                                <span>
+                                    As part of our venue event package, we have been given a block of 10 rooms that are available for booking. They
+                                    are guaranteed available until <b>45 days</b> before the event date. If you can't find a room that you like in 
+                                    the block of rooms, we&apos;ve been told that our event discount code will apply to other rooms still available
+                                    elsewhere at the venue. Be sure to make your reservations early!
+                                </span>
+                                <button className={styles.btn} onClick={() => window.open(reservationsLink, "none")}>
+                                    Reserve a Room
+                                </button>
+                            </div>
+                            }
 
                             <h2 className="text-3xl mb-4 mt-4">
                                     Contact Info

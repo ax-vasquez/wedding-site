@@ -43,3 +43,33 @@
         background-color: $emerald-700;
     }
 }
+
+.reservationsPromptWrapper {
+    h2 {
+        font-size: 38px;
+        margin-bottom: 1rem;
+    }
+    margin-top: 2rem;
+    color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 0;
+}
+
+.visible {
+    height: auto;
+    visibility: visible;
+    color: $gray-A1;
+    a {
+        margin-top: 1rem;
+        transition: 0.3s ease;
+        color: $gray-A1;
+        text-decoration: underline;
+        &:hover {
+            transition: 0.3s ease;
+            color: $gray-400;
+        }
+    }
+}
