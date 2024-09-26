@@ -66,7 +66,7 @@ const Venue: NextPage<{
                                 </h2>
                                 <span>
                                     As part of our venue event package, we have been given a block of 10 rooms that are available for booking. They
-                                    are guaranteed available until <b>45 days</b> before the event date. If you can't find a room that you like in 
+                                    are guaranteed available until <b>45 days</b> before the event date. If you can&apos;t find a room that you like in 
                                     the block of rooms, we&apos;ve been told that our event discount code will apply to other rooms still available
                                     elsewhere at the venue. Be sure to make your reservations early!
                                 </span>
