@@ -16,7 +16,7 @@ const Venue: NextPage<{
     venueInfo
 }) => {
 
-    const [reservationsLink, setReservationsLink] = useState('')
+    const [reservationsLink, setReservationsLink] = useState("")
 
     useEffect(() => {
         axios.get(`/api/venue/reservation-link`)
