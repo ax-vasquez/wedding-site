@@ -123,14 +123,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 }
             }    
         )
+        .then(() => {
+            closeModal()
+            resetInputFields()
+            router.push('/rsvp')
+        })
         .catch((e: AxiosError<{ message: string }>) => {
             setAuthError(e.response?.data?.message || '')
         })
         .finally(() => {
-            closeModal()
-            resetInputFields()
             setLoading(false)
-            router.push('/rsvp')
         })
     }
 
