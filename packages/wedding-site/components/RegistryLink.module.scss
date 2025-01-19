@@ -1,0 +1,21 @@
+@import '../styles/_variables';
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    >button {
+        border: 1px solid $gray-400;
+        color: $gray-400;
+        padding: 0 2rem;
+        border-radius: 4px;
+        transition: 0.3s ease;
+        &:hover {
+            border: 1px solid $gray-600;
+            color: $gray-600;
+            transition: 0.3s ease;
+        }
+    }
+}

@@ -25,6 +25,7 @@ function parseJwt (token: string) {
 }
 
 // See https://maxschmitt.me/posts/next-js-http-only-cookie-auth-tokens
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (req: NextApiRequest, res: NextApiResponse) => {
 	// Return a Promise to let Next.js know when we're done
 	// processing the request:

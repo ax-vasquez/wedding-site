@@ -1,5 +1,16 @@
 @import '../styles/_variables';
 
+.pageTitleContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    h1 {
+        font-size: 42px;
+    }
+}
+
 .unsavedChanges {
     color: rgb(200,200,0);
     display: flex;

@@ -22,6 +22,7 @@ const nextConfig = {
     SANITY_PROJECT: process.env.SANITY_PROJECT,
     SANITY_DATASET: process.env.SANITY_DATASET,
     API_URL: process.env.API_URL,
+    REGISTRY_URL: process.env.REGISTRY_URL,
   }
 }
 

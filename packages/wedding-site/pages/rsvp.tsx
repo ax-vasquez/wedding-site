@@ -13,6 +13,7 @@ import cs from 'clsx'
 import { useUser } from "@/hooks/useUser"
 import { InviteesInfo } from "@/components/rsvp/InviteesInfo"
 import Link from "next/link"
+import { RegistryLink } from "@/components/RegistryLink"
 
 const RSVP: NextPage<{ 
     parallaxImages: ParallaxImageData[]
@@ -132,7 +133,7 @@ const RSVP: NextPage<{
             />
             <div className="text-content text-white py-7">
                 <div>
-                    <h2 className="text-6xl text-center mb-4">We hope you&apos;re able to attend!</h2>
+                    <h2 className="text-3xl text-center mb-4">We hope you&apos;re able to attend!</h2>
                     <div className={styles.unsavedChanges}>
                         {hasUnsavedChanges && (
                             <>
@@ -150,6 +151,7 @@ const RSVP: NextPage<{
                             </>
                         )}
                     </div>
+                    <RegistryLink />
                     <div className={styles.undoButtonWrapper}>
                         {hasUnsavedChanges && 
                             <button className={cs(styles.undoButton, "text-white")} onClick={handleUndo}>

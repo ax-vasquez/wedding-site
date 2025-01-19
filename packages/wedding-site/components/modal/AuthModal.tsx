@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import styles from './AuthModal.module.scss'
 import { useRouter } from 'next/navigation'
 import { HideableTextField } from './fields/HideableTextField'
+import { RegistryLink } from '../RegistryLink'
 
 interface AuthModalProps {
     isLoggedIn: boolean
@@ -180,6 +181,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                         }}>{existingUser ? "New Guest?" : "Already Registered?"}</button>
                     </form>
                 }
+                <RegistryLink />
                 <div className={styles.authErrorWrapper}>
                     <span>{authError}</span>
                 </div>
