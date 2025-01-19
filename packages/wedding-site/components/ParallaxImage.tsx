@@ -20,7 +20,7 @@ const ParallaxImage: React.FC<{ imageUrl: string, title: string, caption?: any }
         style={{
           backgroundImage: `url(${imageUrl})`
         }}
-        className="h-full bg-fixed bg-center bg-no-repeat bg-cover"
+        className="h-3/4 bg-fixed bg-center bg-no-repeat bg-cover"
       >
         {caption && <ParallaxImageCaption captionComponent={caption} />}
       </div>
